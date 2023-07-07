@@ -1,7 +1,18 @@
-import { Box } from "@mui/material";
+import PageHead from "@/components/PageHead/PageHead";
+import { Box, styled } from "@mui/material";
 
-const MainPage = () => {
-    return (<Box></Box>);
+interface IMainPageProps {
+	title: string;
 }
+
+const MainPage = ({ title }: IMainPageProps) => {
+	return (
+		<MainPageWrapper>
+			<PageHead title={title} />
+		</MainPageWrapper>
+	);
+};
+
+const MainPageWrapper = styled(Box)(() => ({}));
 
 export default MainPage;
