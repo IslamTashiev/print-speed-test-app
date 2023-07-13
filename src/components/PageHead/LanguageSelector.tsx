@@ -1,24 +1,31 @@
 import React, { useState } from "react";
 import { Box, List, ListItem, ListItemButton, Typography, styled } from "@mui/material";
 import clsx from "clsx";
+import i18n from "../../i18n";
 
 import { ReactComponent as RuIcon } from "icons/language-ru.svg";
 import { ReactComponent as EnIcon } from "icons/language-en.svg";
 import { ReactComponent as UkrIcon } from "icons/language-ukr.svg";
 
-interface LanguageInfo {
-	icon: JSX.Element;
-	language: string;
-}
+type ICurrentLanguage = "ru" | "en" | "ukr";
 
-const languagesInfo: LanguageInfo[] = [
-	{ icon: <RuIcon />, language: "Русский" },
-	{ icon: <EnIcon />, language: "English" },
-	{ icon: <UkrIcon />, language: "Украинська" },
-];
+const languagesInfo = {
+	ru: { icon: <RuIcon />, language: "Русский", key: "ru" },
+	en: { icon: <EnIcon />, language: "English", key: "en" },
+	ukr: { icon: <UkrIcon />, language: "Украинська", key: "ukr" },
+};
 
 const LanguageSelector = (): JSX.Element => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
+	const [currentLanguage, setCurrentLanguage] = useState<ICurrentLanguage>(
+		i18n.language as ICurrentLanguage
+	);
+
+	const changeLanguage = (language: ICurrentLanguage) => {
+		i18n.changeLanguage(language);
+		setCurrentLanguage(language);
+		setIsOpen(false);
+	};
 
 	return (
 		<LanguageSelectorWrapper>
@@ -26,17 +33,17 @@ const LanguageSelector = (): JSX.Element => {
 				onClick={() => setIsOpen(!isOpen)}
 				className={clsx("language-selector-current", { open: isOpen })}
 			>
-				<RuIcon />
+				{languagesInfo?.[currentLanguage]?.icon}
 				<Typography variant='body2' color='text.primary' fontSize={14}>
-					Русский
+					{languagesInfo?.[currentLanguage]?.language}
 				</Typography>
 			</Box>
 			<Box className={clsx("language-selector-list", { open: isOpen })}>
 				<Box className='language-selector-list-inner'>
 					<List>
-						{languagesInfo.map((item: LanguageInfo) => (
+						{Object.values(languagesInfo).map((item) => (
 							<ListItem key={item.language}>
-								<ListItemButton>
+								<ListItemButton onClick={() => changeLanguage(item.key as ICurrentLanguage)}>
 									<Box className='language-selector-list-item'>
 										{item.icon}
 										<Typography variant='body2' color='text.primary' fontSize={14}>
@@ -73,7 +80,7 @@ const LanguageSelectorWrapper = styled(Box)(() => ({
 		width: "100%",
 		backgroundColor: "#4C5558",
 		borderRadius: "10px",
-		paddingTop: "41px",
+		paddingTop: "40px",
 		top: "0",
 		zIndex: 0,
 		overflow: "hidden",
@@ -86,6 +93,7 @@ const LanguageSelectorWrapper = styled(Box)(() => ({
 
 	".language-selector-list-inner": {
 		overflow: "auto",
+		marginTop: 5,
 	},
 
 	".language-selector-list-item": {
