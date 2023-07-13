@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, styled } from "@mui/material";
 import LanguageSelector from "./LanguageSelector";
 
 interface IPageHeadProps {
@@ -8,13 +8,20 @@ interface IPageHeadProps {
 
 const PageHead = ({ title }: IPageHeadProps) => {
 	return (
-		<Box display='flex' justifyContent='space-between' alignItems='center'>
+		<PageHeadWrapper>
 			<Typography variant='h1' color='primary.main' fontSize={36}>
 				{title}
 			</Typography>
 			<LanguageSelector />
-		</Box>
+		</PageHeadWrapper>
 	);
 };
+
+const PageHeadWrapper = styled(Box)(() => ({
+	display: "flex",
+	justifyContent: "space-between",
+	alignItems: "center",
+	marginTop: 24,
+}));
 
 export default PageHead;

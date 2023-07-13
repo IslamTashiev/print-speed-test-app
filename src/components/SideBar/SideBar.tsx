@@ -59,7 +59,8 @@ const SideBar = () => {
 
 const SideBarWrapper = styled(Box)(() => ({
 	padding: "30px 0px",
-	maxWidth: 250,
+	maxWidth: "20%",
+	width: "100%",
 	background: "#3F4649",
 	height: "100vh",
 	border: "1px solid #4C5558",

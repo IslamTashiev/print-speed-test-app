@@ -4,7 +4,7 @@ import SideBar from "./components/SideBar/SideBar";
 
 function App() {
 	return (
-		<Box display='flex' gap={4}>
+		<Box display='flex'>
 			<SideBar />
 			<Router />
 		</Box>
