@@ -1,3 +1,8 @@
 {
-    "hello": "Привет"
+    "start_test": "Начать тест",
+    "in_the_top": "в топе",
+    "my_best_score": "Мой лучший результат",
+    "history": "История",
+    "customize_profile": "Настроить профиль",
+    "top_best": "Топ лучших"
 }

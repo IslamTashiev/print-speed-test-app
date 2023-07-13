@@ -1,5 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import MainPage from "./pages/MainPage";
+import { useTranslation } from "react-i18next";
 
 interface IRoutes {
 	path: string;
@@ -7,11 +8,12 @@ interface IRoutes {
 	title: string;
 }
 
-const r: IRoutes[] = [
-	{ path: "/", element: (title: string) => <MainPage title={title} />, title: "Начать тест" },
-];
-
 const Router = () => {
+	const { t } = useTranslation();
+
+	const r: IRoutes[] = [
+		{ path: "/", element: (title: string) => <MainPage title={title} />, title: t("start_test") },
+	];
 	return (
 		<Routes>
 			{r.map((route, index) => (

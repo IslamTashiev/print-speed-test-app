@@ -1,16 +1,20 @@
 import { Box, Divider, List, ListItem, ListItemButton, Typography, styled } from "@mui/material";
+import { useTranslation } from "react-i18next";
+
 import { ReactComponent as StarIcon } from "icons/menu-star.svg";
 import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
 import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
 
 const sideBarItems = [
-	{ title: "История", icon: <HistoryIcon /> },
-	{ title: "Настроить мой профиль", icon: <SettingsIcon /> },
-	{ title: "Топ лучших", icon: <TopsIcon /> },
+	{ title: "history", icon: <HistoryIcon /> },
+	{ title: "customize_profile", icon: <SettingsIcon /> },
+	{ title: "top_best", icon: <TopsIcon /> },
 ];
 
 const SideBar = () => {
+	const { t } = useTranslation();
+
 	return (
 		<SideBarWrapper>
 			<Box className='user-info'>
@@ -19,7 +23,7 @@ const SideBar = () => {
 					alt='User'
 				/>
 				<Typography variant='h4'>
-					Vasilii Vasiliiev <Box component='span'>#224 в топе</Box>
+					Vasilii Vasiliiev <Box component='span'>#224 {t("in_the_top")}</Box>
 				</Typography>
 			</Box>
 			<Divider />
@@ -28,7 +32,7 @@ const SideBar = () => {
 					<ListItemButton>
 						<Box className='menu-item'>
 							<StarIcon />
-							<Typography variant='h6'>Мой лучший результат</Typography>
+							<Typography variant='h6'>{t("my_best_score")}</Typography>
 						</Box>
 					</ListItemButton>
 				</ListItem>
@@ -41,7 +45,7 @@ const SideBar = () => {
 							<ListItemButton>
 								<Box className='menu-item'>
 									{item.icon}
-									<Typography variant='h6'>{item.title}</Typography>
+									<Typography variant='h6'>{t(item.title)}</Typography>
 								</Box>
 							</ListItemButton>
 						</ListItem>
@@ -62,6 +66,7 @@ const SideBarWrapper = styled(Box)(() => ({
 	".user-info": {
 		textAlign: "center",
 		marginBottom: 30,
+		padding: "0 16px",
 		img: {
 			width: 100,
 			height: 100,
