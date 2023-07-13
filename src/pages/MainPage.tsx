@@ -13,6 +13,8 @@ const MainPage = ({ title }: IMainPageProps) => {
 	);
 };
 
-const MainPageWrapper = styled(Box)(() => ({}));
+const MainPageWrapper = styled(Box)(() => ({
+	width: "80%",
+}));
 
 export default MainPage;
