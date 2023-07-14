@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, styled } from "@mui/material";
 
 import Test from "./Test";
 import TestInfo from "./TestInfo";
 
 const TestBlock = () => {
+	const [currentSpeed, setCurrentSpeed] = useState<number>(0);
+	const [accuracy, setAccuracy] = useState<number>(0);
+
 	return (
 		<TestBlockWrapper>
-			<Test />
-			<TestInfo />
+			<Test setCurrentSpeed={setCurrentSpeed} setAccuracy={setAccuracy} />
+			<TestInfo speed={currentSpeed} accuracy={accuracy} />
 		</TestBlockWrapper>
 	);
 };

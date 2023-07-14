@@ -5,14 +5,19 @@ import { useTranslation } from "react-i18next";
 import InfoItem from "./InfoItem";
 import { ReactComponent as RetryIcon } from "icons/retry.svg";
 
-const TestInfo = () => {
+interface ITestInfoProps {
+	speed: number;
+	accuracy: number;
+}
+
+const TestInfo = ({ speed, accuracy }: ITestInfoProps) => {
 	const { t } = useTranslation();
 
 	return (
 		<TestInfoWrapper>
 			<Box className='info-items'>
-				<InfoItem type='accuracy' value={100} />
-				<InfoItem type='speed' value={234} />
+				<InfoItem type='accuracy' value={accuracy} />
+				<InfoItem type='speed' value={speed} />
 			</Box>
 			<Button className='retry-button' variant='text' startIcon={<RetryIcon />}>
 				{t("retry")}
