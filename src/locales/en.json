@@ -4,5 +4,9 @@
     "my_best_score": "My best score",
     "history": "History",
     "customize_profile": "Customize Profile",
-    "top_best": "Top best"
+    "top_best": "Top best",
+    "speed_prefix": "chars/min",
+    "accuracy_prefix": "%",
+    "accuracy": "ACCURACY",
+    "speed": "SPEED"
 }

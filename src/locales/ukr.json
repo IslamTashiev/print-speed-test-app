@@ -4,5 +4,9 @@
     "my_best_score": "Мій найкращий результат",
     "history": "Історія",
     "customize_profile": "Налаштувати профіль",
-    "top_best": "Топ найкращих"
+    "top_best": "Топ найкращих",
+    "speed_prefix": "зн./хв.",
+    "accuracy_prefix": "%",
+    "accuracy": "ТОЧНІСТЬ",
+    "speed": "ХУТКІСТЬ"
 }

@@ -1,4 +1,5 @@
 import PageHead from "@/components/PageHead/PageHead";
+import TestBlock from "@/components/TestBlock/TestBlock";
 import { Box, styled } from "@mui/material";
 
 interface IMainPageProps {
@@ -9,6 +10,7 @@ const MainPage = ({ title }: IMainPageProps) => {
 	return (
 		<MainPageWrapper>
 			<PageHead title={title} />
+			<TestBlock />
 		</MainPageWrapper>
 	);
 };
