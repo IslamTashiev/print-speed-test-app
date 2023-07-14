@@ -8,5 +8,6 @@
     "speed_prefix": "chars/min",
     "accuracy_prefix": "%",
     "accuracy": "ACCURACY",
-    "speed": "SPEED"
+    "speed": "SPEED",
+    "retry": "RETRY"
 }

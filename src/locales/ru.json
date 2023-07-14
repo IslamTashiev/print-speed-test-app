@@ -8,5 +8,6 @@
     "speed_prefix": "зн./мин.",
     "accuracy_prefix": "%",
     "accuracy": "ТОЧНОСТЬ",
-    "speed": "СКОРОСТЬ"
+    "speed": "СКОРОСТЬ",
+    "retry": "ЗАНОВО"
 }

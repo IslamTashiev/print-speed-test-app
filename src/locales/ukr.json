@@ -8,5 +8,6 @@
     "speed_prefix": "зн./хв.",
     "accuracy_prefix": "%",
     "accuracy": "ТОЧНІСТЬ",
-    "speed": "ХУТКІСТЬ"
+    "speed": "ХУТКІСТЬ",
+    "retry": "ЗАНОВО"
 }
