@@ -14,8 +14,9 @@ const sideBarItems = [
 
 const SideBar = () => {
 	const { t } = useTranslation();
+	const user = false;
 
-	return (
+	return user ? (
 		<SideBarWrapper>
 			<Box className='user-info'>
 				<img
@@ -54,7 +55,7 @@ const SideBar = () => {
 			</Box>
 			<Divider />
 		</SideBarWrapper>
-	);
+	) : null;
 };
 
 const SideBarWrapper = styled(Box)(() => ({
