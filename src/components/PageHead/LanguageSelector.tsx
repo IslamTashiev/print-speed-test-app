@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, List, ListItem, ListItemButton, Typography, styled } from "@mui/material";
+import { Box, Button, List, ListItem, ListItemButton, Typography, styled } from "@mui/material";
 import clsx from "clsx";
 import i18n from "../../i18n";
 
@@ -29,7 +29,8 @@ const LanguageSelector = (): JSX.Element => {
 
 	return (
 		<LanguageSelectorWrapper>
-			<Box
+			<Button
+				variant='text'
 				onClick={() => setIsOpen(!isOpen)}
 				className={clsx("language-selector-current", { open: isOpen })}
 			>
@@ -37,7 +38,7 @@ const LanguageSelector = (): JSX.Element => {
 				<Typography variant='body2' color='text.primary' fontSize={14}>
 					{languagesInfo?.[currentLanguage]?.language}
 				</Typography>
-			</Box>
+			</Button>
 			<Box className={clsx("language-selector-list", { open: isOpen })}>
 				<Box className='language-selector-list-inner'>
 					<List>
@@ -86,6 +87,7 @@ const LanguageSelectorWrapper = styled(Box)(() => ({
 		overflow: "hidden",
 		maxHeight: "0",
 		transition: "all .5s ease",
+		boxShadow: "0px 0px 32px -13px rgba(0, 0, 0, 0.45)",
 		"&.open": {
 			maxHeight: "400px", // установите желаемую высоту
 		},

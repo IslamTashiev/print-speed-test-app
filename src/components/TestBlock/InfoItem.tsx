@@ -45,7 +45,7 @@ const InfoItem = ({ type, value, onModal, direction = "vertical" }: IInfoItemPro
 					</Typography>
 				)}
 			</Box>
-			{value && !onModal && (
+			{value !== undefined && !onModal && (
 				<Box className='info-item-value'>
 					<Typography variant='h2'>{value}</Typography>
 					<Typography variant='body2'>{t(currentInfo.prefixKey)}</Typography>

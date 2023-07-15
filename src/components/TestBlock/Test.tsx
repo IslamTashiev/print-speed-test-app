@@ -142,6 +142,7 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 
 const TestWrapper = styled(Box)(() => ({
 	padding: 20,
+	width: "85%",
 
 	".simbol": {
 		variant: "body2",

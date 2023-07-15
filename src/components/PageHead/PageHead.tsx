@@ -21,7 +21,7 @@ const PageHeadWrapper = styled(Box)(() => ({
 	display: "flex",
 	justifyContent: "space-between",
 	alignItems: "center",
-	marginTop: 24,
+	marginY: 24,
 }));
 
 export default PageHead;

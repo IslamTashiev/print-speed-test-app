@@ -30,6 +30,11 @@ const TestInfoWrapper = styled(Box)(() => ({
 	borderRadius: "10px",
 	background: "#4C5558",
 	padding: "24px",
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-between",
+	alignItems: "start",
+	width: "15%",
 
 	".info-items": {
 		display: "flex",

@@ -6,7 +6,7 @@ import TestInfo from "./TestInfo";
 
 const TestBlock = () => {
 	const [currentSpeed, setCurrentSpeed] = useState<number>(0);
-	const [accuracy, setAccuracy] = useState<number>(0);
+	const [accuracy, setAccuracy] = useState<number>(100);
 
 	return (
 		<TestBlockWrapper>
