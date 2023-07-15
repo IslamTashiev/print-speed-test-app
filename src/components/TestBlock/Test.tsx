@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Typography, styled } from "@mui/material";
+import { Box, Skeleton, Typography, styled } from "@mui/material";
 import clsx from "clsx";
+import { useTextStore } from "@/store/textStore";
+import { useTranslation } from "react-i18next";
 
-const testedText =
-	"При изучении программирования необходимо выбрать язык программирования, который наилучшим образом подходит для достижения ваших целей. Начните с основных концепций, таких как переменные, условия и циклы. Изучите структуры данных, такие как массивы и списки. После этого углубляйтесь в изучение выбранного языка. Помните, что каждый язык программирования имеет свои преимущества и недостатки. Не паникуйте, а постепенно двигайтесь вперед, углубляя свои знания и навыки.";
+// const testedText =
+// 	"При изучении программирования необходимо выбрать язык программирования, который наилучшим образом подходит для достижения ваших целей. Начните с основных концепций, таких как переменные, условия и циклы. Изучите структуры данных, такие как массивы и списки. После этого углубляйтесь в изучение выбранного языка. Помните, что каждый язык программирования имеет свои преимущества и недостатки. Не паникуйте, а постепенно двигайтесь вперед, углубляя свои знания и навыки.";
 
 interface ITestProps {
 	setAccuracy: (value: number) => void;
@@ -21,6 +23,8 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 	const [totalTime, setTotalTime] = useState<number>(0);
 	const [timerIsStarted, setTimerIsStarted] = useState<boolean>(false);
 
+	const { testedText, getText } = useTextStore((state) => state);
+	const { i18n } = useTranslation();
 	const myInterval: number | any = useRef(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -91,51 +95,64 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 			setCurrentSimbol(testedText.split("")[0]);
 		}
 	}, [testedText]);
+	useEffect(() => {
+		getText(i18n.language);
+	}, []);
 
 	return (
 		<TestWrapper>
-			<Box>
-				{arrOfCheckedSimbols.map((char, index) => (
-					<Typography
-						color='text.primary'
-						key={char + index}
-						component='span'
-						className='simbol verified'
-					>
-						{char}
-					</Typography>
-				))}
-				{currentSimbol && (
-					<Typography
-						color='text.primary'
-						component='span'
-						className={clsx("simbol", "current", { failed: isCheckedSimbolFailed })}
-					>
-						{currentSimbol}
-					</Typography>
-				)}
-
-				{arrOfSimbols.map(
-					(char, index) =>
-						index !== 0 && (
+			{testedText ? (
+				<>
+					<Box>
+						{arrOfCheckedSimbols.map((char, index) => (
 							<Typography
 								color='text.primary'
 								key={char + index}
 								component='span'
-								className='simbol'
+								className='simbol verified'
 							>
 								{char}
 							</Typography>
-						)
-				)}
-			</Box>
-			<input
-				ref={inputRef}
-				type='text'
-				value={typedFullText}
-				onChange={(e) => onChange(e)}
-				className='test-input'
-			/>
+						))}
+						{currentSimbol && (
+							<Typography
+								color='text.primary'
+								component='span'
+								className={clsx("simbol", "current", { failed: isCheckedSimbolFailed })}
+							>
+								{currentSimbol}
+							</Typography>
+						)}
+
+						{arrOfSimbols.map(
+							(char, index) =>
+								index !== 0 && (
+									<Typography
+										color='text.primary'
+										key={char + index}
+										component='span'
+										className='simbol'
+									>
+										{char}
+									</Typography>
+								)
+						)}
+					</Box>
+					<input
+						ref={inputRef}
+						type='text'
+						value={typedFullText}
+						onChange={(e) => onChange(e)}
+						className='test-input'
+					/>
+				</>
+			) : (
+				<Box>
+					{[90, 92, 96, 99, 100, 90, 99, 100, 85, 90, 92].map((item) => (
+						<Skeleton width={item + "%"} />
+					))}
+				</Box>
+			)}
 		</TestWrapper>
 	);
 };

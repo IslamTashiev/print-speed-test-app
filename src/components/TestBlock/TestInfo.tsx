@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 
 import InfoItem from "./InfoItem";
 import { ReactComponent as RetryIcon } from "icons/retry.svg";
+import { useTextStore } from "@/store/textStore";
 
 interface ITestInfoProps {
 	speed: number;
@@ -12,6 +13,7 @@ interface ITestInfoProps {
 
 const TestInfo = ({ speed, accuracy }: ITestInfoProps) => {
 	const { t } = useTranslation();
+	const { changeText } = useTextStore((state) => state);
 
 	return (
 		<TestInfoWrapper>
@@ -19,7 +21,12 @@ const TestInfo = ({ speed, accuracy }: ITestInfoProps) => {
 				<InfoItem type='accuracy' value={accuracy} />
 				<InfoItem type='speed' value={speed} />
 			</Box>
-			<Button className='retry-button' variant='text' startIcon={<RetryIcon />}>
+			<Button
+				onClick={changeText}
+				className='retry-button'
+				variant='text'
+				startIcon={<RetryIcon />}
+			>
 				{t("retry")}
 			</Button>
 		</TestInfoWrapper>
