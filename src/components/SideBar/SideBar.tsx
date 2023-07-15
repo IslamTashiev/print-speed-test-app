@@ -1,5 +1,15 @@
-import { Box, Divider, List, ListItem, ListItemButton, Typography, styled } from "@mui/material";
+import {
+	Box,
+	Button,
+	Divider,
+	List,
+	ListItem,
+	ListItemButton,
+	Typography,
+	styled,
+} from "@mui/material";
 import { useTranslation } from "react-i18next";
+import { useUserStore } from "@/store/userStore";
 
 import { ReactComponent as StarIcon } from "icons/menu-star.svg";
 import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
@@ -14,46 +24,50 @@ const sideBarItems = [
 
 const SideBar = () => {
 	const { t } = useTranslation();
-	const user = false;
+	const { user, logout } = useUserStore((state) => state);
 
 	return user ? (
 		<SideBarWrapper>
-			<Box className='user-info'>
-				<img
-					src='https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80'
-					alt='User'
-				/>
-				<Typography variant='h4'>
-					Vasilii Vasiliiev <Box component='span'>#224 {t("in_the_top")}</Box>
-				</Typography>
-			</Box>
-			<Divider />
-			<List>
-				<ListItem>
-					<ListItemButton>
-						<Box className='menu-item'>
-							<StarIcon />
-							<Typography variant='h6'>{t("my_best_score")}</Typography>
-						</Box>
-					</ListItemButton>
-				</ListItem>
-			</List>
-			<Divider />
-			<Box className='menu-list'>
+			<Box>
+				<Box className='user-info'>
+					<img src={user.photoURL || ""} alt='User' />
+					<Typography variant='h4'>
+						{user.displayName} <Box component='span'>#224 {t("in_the_top")}</Box>
+					</Typography>
+				</Box>
+				<Divider />
 				<List>
-					{sideBarItems.map((item) => (
-						<ListItem>
-							<ListItemButton>
-								<Box className='menu-item'>
-									{item.icon}
-									<Typography variant='h6'>{t(item.title)}</Typography>
-								</Box>
-							</ListItemButton>
-						</ListItem>
-					))}
+					<ListItem>
+						<ListItemButton>
+							<Box className='menu-item'>
+								<StarIcon />
+								<Typography variant='h6'>{t("my_best_score")}</Typography>
+							</Box>
+						</ListItemButton>
+					</ListItem>
 				</List>
+				<Divider />
+				<Box className='menu-list'>
+					<List>
+						{sideBarItems.map((item) => (
+							<ListItem>
+								<ListItemButton>
+									<Box className='menu-item'>
+										{item.icon}
+										<Typography variant='h6'>{t(item.title)}</Typography>
+									</Box>
+								</ListItemButton>
+							</ListItem>
+						))}
+					</List>
+				</Box>
+				<Divider />
 			</Box>
-			<Divider />
+			<Box className='logout-button-wrapper'>
+				<Button onClick={logout} variant='text' className='logout-button'>
+					{t("logout")}
+				</Button>
+			</Box>
 		</SideBarWrapper>
 	) : null;
 };
@@ -65,6 +79,10 @@ const SideBarWrapper = styled(Box)(() => ({
 	background: "#3F4649",
 	height: "100vh",
 	border: "1px solid #4C5558",
+	display: "flex",
+	flexDirection: "column",
+	justifyContent: "space-between",
+
 	".user-info": {
 		textAlign: "center",
 		marginBottom: 30,
@@ -102,6 +120,13 @@ const SideBarWrapper = styled(Box)(() => ({
 		".MuiListItem-root": {
 			padding: 0,
 		},
+	},
+	".logout-button-wrapper": {
+		padding: "0 12px",
+	},
+	".logout-button": {
+		width: "100%",
+		backgroundColor: "rgba(255, 82, 82, 0.10)",
 	},
 }));
 

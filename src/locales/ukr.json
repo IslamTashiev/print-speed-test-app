@@ -17,5 +17,6 @@
     "your_name":"Ваше Ім'я",
     "help_text":"Або увійдіть за допомогою",
     "already_have_an_account":"Вже є обліковий запис?",
-    "dont_have_an_account":"У вас немає облікового запису?"
+    "dont_have_an_account":"У вас немає облікового запису?",
+    "logout":"Вийти"
 }

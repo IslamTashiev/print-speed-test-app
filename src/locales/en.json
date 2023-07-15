@@ -17,5 +17,6 @@
     "your_name": "Your Name",
     "help_text": "Or sign in with",
     "already_have_an_account": "Already have an account?",
-    "dont_have_an_account": "Don't have an account?"
+    "dont_have_an_account": "Don't have an account?",
+    "logout":"Logout"
 }
