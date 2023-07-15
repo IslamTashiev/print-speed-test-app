@@ -6,6 +6,13 @@ import { useTranslation } from "react-i18next";
 import Input from "@/components/Input/Input";
 import { ReactComponent as GoogleIcon } from "icons/google.svg";
 import LanguageSelector from "@/components/PageHead/LanguageSelector";
+import { useUserStore } from "@/store/userStore";
+
+export interface IUserData {
+	email: string;
+	password: string;
+	name: string;
+}
 
 const AuthPage = () => {
 	const [email, setEmail] = useState("");
@@ -13,10 +20,24 @@ const AuthPage = () => {
 	const [name, setName] = useState("");
 
 	const { authType } = useParams();
+	const { login, register } = useUserStore((state) => state);
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
 	const isRegisterPage = authType === "register";
+
+	const onSubmit = () => {
+		const userData: IUserData = { email, password, name };
+		if (!isRegisterPage) {
+			login(userData);
+		} else {
+			register(userData);
+		}
+		setEmail("");
+		setPassword("");
+		setName("");
+		navigate("/");
+	};
 
 	const changePages = () => {
 		if (isRegisterPage) {
@@ -57,7 +78,7 @@ const AuthPage = () => {
 						/>
 					)}
 				</FormControl>
-				<Button className='button' variant='text'>
+				<Button onClick={onSubmit} className='button' variant='text'>
 					{isRegisterPage ? t("registration") : t("login")}
 				</Button>
 				<Typography variant='body2' className='help-text' color='text.primary'>
