@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 
 import Input from "@/components/Input/Input";
 import { ReactComponent as GoogleIcon } from "icons/google.svg";
+import LanguageSelector from "@/components/PageHead/LanguageSelector";
 
 const AuthPage = () => {
 	const [email, setEmail] = useState("");
@@ -28,9 +29,12 @@ const AuthPage = () => {
 	return (
 		<AuthPageWrapper>
 			<Box className='content-wrapper'>
-				<Typography className='auth-page-title' variant='h1' color='text.primary'>
-					{isRegisterPage ? t("registration") : t("login")}
-				</Typography>
+				<Box className='auth-page-header'>
+					<Typography className='auth-page-title' variant='h1' color='text.primary'>
+						{isRegisterPage ? t("registration") : t("login")}
+					</Typography>
+					<LanguageSelector />
+				</Box>
 				<FormControl className='page-form'>
 					<Input
 						onChange={(e) => setEmail(e.target.value)}
@@ -64,7 +68,7 @@ const AuthPage = () => {
 				</Button>
 				<Box>
 					<Typography variant='body2' className='help-text' color='text.primary'>
-						{isRegisterPage ? t("already_have_an_account") : t("dont_have_an_account")}
+						{isRegisterPage ? t("already_have_an_account") : t("dont_have_an_account")}{" "}
 						<Typography onClick={changePages} component='span'>
 							{isRegisterPage ? t("login") : t("registration")}
 						</Typography>
@@ -82,16 +86,36 @@ const AuthPageWrapper = styled(Box)(() => ({
 	width: "100%",
 	height: "100vh",
 
+	".auth-page-header": {
+		position: "relative",
+		zIndex: 10,
+		display: "flex",
+		alignItems: "center",
+		justifyContent: "space-between",
+		marginBottom: "24px",
+
+		".language-selector": {
+			"@media screen and (max-width: 400px)": {
+				".language": {
+					display: "none",
+				},
+				".MuiButtonBase-root": {
+					justifyContent: "center",
+				},
+			},
+		},
+	},
+
 	".content-wrapper": {
 		display: "flex",
 		flexDirection: "column",
-		maxWidth: "350px",
+		maxWidth: "450px",
 		width: "100%",
 		padding: "0 10px",
 	},
 
 	".auth-page-title": {
-		textAlign: "center",
+		// textAlign: "center",
 		fontSize: "34px",
 		fontWeight: "700",
 	},

@@ -28,14 +28,14 @@ const LanguageSelector = (): JSX.Element => {
 	};
 
 	return (
-		<LanguageSelectorWrapper>
+		<LanguageSelectorWrapper className='language-selector'>
 			<Button
 				variant='text'
 				onClick={() => setIsOpen(!isOpen)}
 				className={clsx("language-selector-current", { open: isOpen })}
 			>
 				{languagesInfo?.[currentLanguage]?.icon}
-				<Typography variant='body2' color='text.primary' fontSize={14}>
+				<Typography className='language' variant='body2' color='text.primary' fontSize={14}>
 					{languagesInfo?.[currentLanguage]?.language}
 				</Typography>
 			</Button>
@@ -47,7 +47,12 @@ const LanguageSelector = (): JSX.Element => {
 								<ListItemButton onClick={() => changeLanguage(item.key as ICurrentLanguage)}>
 									<Box className='language-selector-list-item'>
 										{item.icon}
-										<Typography variant='body2' color='text.primary' fontSize={14}>
+										<Typography
+											className='language'
+											variant='body2'
+											color='text.primary'
+											fontSize={14}
+										>
 											{item.language}
 										</Typography>
 									</Box>
