@@ -18,6 +18,7 @@ const theme = (mode: PaletteMode) => {
             MuiButton: {
                 styleOverrides: {
                     root: {
+                        borderRadius: "10px",
                         "&.MuiButton-outlined": {
                             borderWidth: "2px",
                         }
