@@ -9,5 +9,13 @@
     "accuracy_prefix": "%",
     "accuracy": "ТОЧНІСТЬ",
     "speed": "ХУТКІСТЬ",
-    "retry": "ЗАНОВО"
+    "retry": "ЗАНОВО",
+    "registration": "Реєстрація",
+    "login":"Увійдіть",
+    "email":"Емейл",
+    "password":"Пароль",
+    "your_name":"Ваше Ім'я",
+    "help_text":"Або увійдіть за допомогою",
+    "already_have_an_account":"Вже є обліковий запис?",
+    "dont_have_an_account":"У вас немає облікового запису?"
 }

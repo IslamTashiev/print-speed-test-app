@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Box, Button, FormControl, Typography, styled } from "@mui/material";
 import { useNavigate, useParams } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import Input from "@/components/Input/Input";
 import { ReactComponent as GoogleIcon } from "icons/google.svg";
@@ -11,6 +12,7 @@ const AuthPage = () => {
 	const [name, setName] = useState("");
 
 	const { authType } = useParams();
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 
 	const isRegisterPage = authType === "register";
@@ -27,44 +29,44 @@ const AuthPage = () => {
 		<AuthPageWrapper>
 			<Box className='content-wrapper'>
 				<Typography className='auth-page-title' variant='h1' color='text.primary'>
-					{isRegisterPage ? "Регистрация" : "Войдите"}
+					{isRegisterPage ? t("registration") : t("login")}
 				</Typography>
 				<FormControl className='page-form'>
 					<Input
 						onChange={(e) => setEmail(e.target.value)}
 						value={email}
 						placeholder='email@gmail.com'
-						label='Email'
+						label={t("email")}
 					/>
 					<Input
 						onChange={(e) => setPassword(e.target.value)}
 						value={password}
-						placeholder='Password'
-						label='Password'
+						placeholder={t("password")}
+						label={t("password")}
 					/>
 					{isRegisterPage && (
 						<Input
 							onChange={(e) => setName(e.target.value)}
 							value={name}
 							placeholder='John Johnson'
-							label='Your Name'
+							label={t("your_name")}
 						/>
 					)}
 				</FormControl>
 				<Button className='button' variant='text'>
-					{isRegisterPage ? "Регистрация" : "Войти"}
+					{isRegisterPage ? t("registration") : t("login")}
 				</Button>
 				<Typography variant='body2' className='help-text' color='text.primary'>
-					Или войдите с помощью
+					{t("help_text")}
 				</Typography>
 				<Button className='button' variant='text' startIcon={<GoogleIcon />}>
 					Google
 				</Button>
 				<Box>
 					<Typography variant='body2' className='help-text' color='text.primary'>
-						{isRegisterPage ? "Уже есть аккаунт? " : "У вас нет аккаунта? "}
+						{isRegisterPage ? t("already_have_an_account") : t("dont_have_an_account")}
 						<Typography onClick={changePages} component='span'>
-							{isRegisterPage ? "Войти" : "Создайте"}
+							{isRegisterPage ? t("login") : t("registration")}
 						</Typography>
 					</Typography>
 				</Box>
