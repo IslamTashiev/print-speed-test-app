@@ -25,6 +25,8 @@ const Input = ({ onChange, value, label, placeholder }: IInputProps) => {
 };
 
 const InputWrapper = styled(Box)(() => ({
+	display: "flex",
+	flexDirection: "column",
 	".input-root": {
 		width: "100%",
 		borderRadius: 10,
