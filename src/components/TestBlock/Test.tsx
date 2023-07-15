@@ -58,6 +58,8 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 		setIsRunning(false);
 	};
 
+	document.addEventListener("click", () => inputRef.current?.focus());
+
 	useEffect(() => {
 		if (isRunning) {
 			myInterval.current = setInterval(() => {
