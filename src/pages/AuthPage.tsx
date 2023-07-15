@@ -7,6 +7,8 @@ import Input from "@/components/Input/Input";
 import { ReactComponent as GoogleIcon } from "icons/google.svg";
 import LanguageSelector from "@/components/PageHead/LanguageSelector";
 import { useUserStore } from "@/store/userStore";
+import { auth, provider } from "@/firebase/config";
+import { signInWithPopup } from "firebase/auth";
 
 export interface IUserData {
 	email: string;
@@ -36,6 +38,11 @@ const AuthPage = () => {
 		setEmail("");
 		setPassword("");
 		setName("");
+		navigate("/");
+	};
+	const handleSignInWithGoogle = async () => {
+		provider.setCustomParameters({ prompt: "select_account" });
+		await signInWithPopup(auth, provider);
 		navigate("/");
 	};
 
@@ -84,7 +91,12 @@ const AuthPage = () => {
 				<Typography variant='body2' className='help-text' color='text.primary'>
 					{t("help_text")}
 				</Typography>
-				<Button className='button' variant='text' startIcon={<GoogleIcon />}>
+				<Button
+					onClick={handleSignInWithGoogle}
+					className='button'
+					variant='text'
+					startIcon={<GoogleIcon />}
+				>
 					Google
 				</Button>
 				<Box>
