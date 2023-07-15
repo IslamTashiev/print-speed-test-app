@@ -150,8 +150,8 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 				</>
 			) : (
 				<Box>
-					{[90, 92, 96, 99, 100, 90, 99, 100, 85, 90, 92].map((item) => (
-						<Skeleton width={item + "%"} />
+					{[90, 92, 96, 99, 100, 90, 99, 100, 85, 90, 92].map((item, index) => (
+						<Skeleton key={index} width={item + "%"} />
 					))}
 				</Box>
 			)}

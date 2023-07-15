@@ -50,7 +50,7 @@ const SideBar = () => {
 				<Box className='menu-list'>
 					<List>
 						{sideBarItems.map((item) => (
-							<ListItem>
+							<ListItem key={item.title}>
 								<ListItemButton>
 									<Box className='menu-item'>
 										{item.icon}
