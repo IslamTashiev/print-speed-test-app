@@ -1,23 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, FormControl, Typography, styled } from "@mui/material";
+import { useNavigate, useParams } from "react-router";
 
 import Input from "@/components/Input/Input";
 import { ReactComponent as GoogleIcon } from "icons/google.svg";
 
 const AuthPage = () => {
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [name, setName] = useState("");
+
+	const { authType } = useParams();
+	const navigate = useNavigate();
+
+	const isRegisterPage = authType === "register";
+
+	const changePages = () => {
+		if (isRegisterPage) {
+			navigate("/authorization/login");
+		} else {
+			navigate("/authorization/register");
+		}
+	};
+
 	return (
 		<AuthPageWrapper>
 			<Box className='content-wrapper'>
 				<Typography className='auth-page-title' variant='h1' color='text.primary'>
-					Войдите
+					{isRegisterPage ? "Регистрация" : "Войдите"}
 				</Typography>
 				<FormControl className='page-form'>
-					<Input onChange={(e) => e} value={""} placeholder='email@gmail.com' label='Email' />
-					<Input onChange={(e) => e} value={""} placeholder='Password' label='Password' />
-					<Input onChange={(e) => e} value={""} placeholder='John Johnson' label='Your Name' />
+					<Input
+						onChange={(e) => setEmail(e.target.value)}
+						value={email}
+						placeholder='email@gmail.com'
+						label='Email'
+					/>
+					<Input
+						onChange={(e) => setPassword(e.target.value)}
+						value={password}
+						placeholder='Password'
+						label='Password'
+					/>
+					{isRegisterPage && (
+						<Input
+							onChange={(e) => setName(e.target.value)}
+							value={name}
+							placeholder='John Johnson'
+							label='Your Name'
+						/>
+					)}
 				</FormControl>
 				<Button className='button' variant='text'>
-					Войти
+					{isRegisterPage ? "Регистрация" : "Войти"}
 				</Button>
 				<Typography variant='body2' className='help-text' color='text.primary'>
 					Или войдите с помощью
@@ -27,7 +62,10 @@ const AuthPage = () => {
 				</Button>
 				<Box>
 					<Typography variant='body2' className='help-text' color='text.primary'>
-						У вас нет аккаунта? <Typography component='span'>Создайте</Typography>
+						{isRegisterPage ? "Уже есть аккаунт? " : "У вас нет аккаунта? "}
+						<Typography onClick={changePages} component='span'>
+							{isRegisterPage ? "Войти" : "Создайте"}
+						</Typography>
 					</Typography>
 				</Box>
 			</Box>

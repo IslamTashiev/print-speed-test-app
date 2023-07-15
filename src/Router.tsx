@@ -14,7 +14,7 @@ const Router = () => {
 
 	const r: IRoutes[] = [
 		{ path: "/", element: (title: string) => <MainPage title={title} />, title: t("start_test") },
-		{ path: "/authorization", element: () => <AuthPage />, title: "" },
+		{ path: "/authorization/:authType", element: () => <AuthPage />, title: "" },
 	];
 	return (
 		<Routes>
