@@ -8,7 +8,7 @@ import { useTestStore } from "@/store/testStore";
 
 const TestInfo = () => {
 	const { t } = useTranslation();
-	const { changeText, currentSpeed: speed, accuracy } = useTestStore((state) => state);
+	const { changeText, currentSpeed: speed, accuracy, allTexts } = useTestStore((state) => state);
 
 	return (
 		<TestInfoWrapper>
@@ -17,6 +17,7 @@ const TestInfo = () => {
 				<InfoItem type='speed' value={speed} />
 			</Box>
 			<Button
+				disabled={allTexts.length === 1}
 				onClick={changeText}
 				className='retry-button'
 				variant='text'

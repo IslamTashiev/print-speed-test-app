@@ -22,13 +22,13 @@ const LanguageSelector = (): JSX.Element => {
 		i18n.language as ICurrentLanguage
 	);
 
-	const { getText, changeText } = useTestStore((state) => state);
+	const { getText, resetAllStates } = useTestStore((state) => state);
 
 	const changeLanguage = (language: ICurrentLanguage) => {
 		i18n.changeLanguage(language);
 		setCurrentLanguage(language);
 		getText(language);
-		changeText();
+		resetAllStates();
 		setIsOpen(false);
 	};
 

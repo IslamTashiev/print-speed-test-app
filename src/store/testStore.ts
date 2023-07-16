@@ -19,12 +19,13 @@ interface ITextStoreState {
 	setArrOfCheckedSimbols: (prevState: string) => void;
 	setCurrentSpeed: (value: number) => void;
 	setAccuracy: (value: number) => void;
+	resetAllStates: () => void;
 }
 interface IData {
 	id: string;
 	text?: string;
 }
-export const useTestStore = create<ITextStoreState>((set) => ({
+export const useTestStore = create<ITextStoreState>((set, get) => ({
 	testedText: "",
 	allTexts: [],
 	totalTime: 0,
@@ -45,15 +46,22 @@ export const useTestStore = create<ITextStoreState>((set) => ({
 		set({ testedText: getRandomElement(data, "") });
 	},
 	changeText: () => {
+		const { resetAllStates } = get();
+		resetAllStates();
 		set((state) => ({
 			testedText: getRandomElement(state.allTexts, state.testedText),
+		}));
+	},
+	resetAllStates: () => {
+		set({
+			testedText: "",
 			totalTime: 0,
 			timerIsStarted: false,
 			countOfFailed: 0,
 			arrOfCheckedSimbols: [],
 			currentSpeed: 0,
 			accuracy: 100,
-		}));
+		});
 	},
 	setTotalTime: () => set((state) => ({ totalTime: state.totalTime + 1 })),
 	setCountOfFailed: () => set((state) => ({ countOfFailed: state.countOfFailed + 1 })),
@@ -67,6 +75,9 @@ export const useTestStore = create<ITextStoreState>((set) => ({
 const getRandomElement = (arr: IData[], lastRandomText: string): string | undefined => {
 	if (arr.length === 0) {
 		return undefined;
+	}
+	if (arr.length === 1) {
+		return arr[0].text;
 	}
 
 	const shuffledArr = [...arr].sort(() => Math.random() - 0.5);
