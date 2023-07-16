@@ -6,6 +6,7 @@ import i18n from "../../i18n";
 import { ReactComponent as RuIcon } from "icons/language-ru.svg";
 import { ReactComponent as EnIcon } from "icons/language-en.svg";
 import { ReactComponent as UkrIcon } from "icons/language-ukr.svg";
+import { useTestStore } from "@/store/testStore";
 
 type ICurrentLanguage = "ru" | "en" | "ukr";
 
@@ -21,9 +22,13 @@ const LanguageSelector = (): JSX.Element => {
 		i18n.language as ICurrentLanguage
 	);
 
+	const { getText, changeText } = useTestStore((state) => state);
+
 	const changeLanguage = (language: ICurrentLanguage) => {
 		i18n.changeLanguage(language);
 		setCurrentLanguage(language);
+		getText(language);
+		changeText();
 		setIsOpen(false);
 	};
 
