@@ -1,29 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Box, Skeleton, Typography, styled } from "@mui/material";
 import clsx from "clsx";
-import { useTextStore } from "@/store/textStore";
+import { useTestStore } from "@/store/testStore";
 import { useTranslation } from "react-i18next";
 
-// const testedText =
-// 	"При изучении программирования необходимо выбрать язык программирования, который наилучшим образом подходит для достижения ваших целей. Начните с основных концепций, таких как переменные, условия и циклы. Изучите структуры данных, такие как массивы и списки. После этого углубляйтесь в изучение выбранного языка. Помните, что каждый язык программирования имеет свои преимущества и недостатки. Не паникуйте, а постепенно двигайтесь вперед, углубляя свои знания и навыки.";
-
-interface ITestProps {
-	setAccuracy: (value: number) => void;
-	setCurrentSpeed: (value: number) => void;
-}
-
-const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
+const Test = () => {
 	const [arrOfSimbols, setArrOfSimbols] = useState<string[]>([]);
-	const [arrOfCheckedSimbols, setArrOfCheckedSimbols] = useState<string[]>([]);
 	const [typedFullText, setTypedFullText] = useState<string>("");
 	const [currentSimbol, setCurrentSimbol] = useState<string>("");
 	const [isCheckedSimbolFailed, setIsCheckedSimbolFailed] = useState<boolean>(false);
-	const [countOfFailed, setCountOfFailed] = useState<number>(0);
 	const [isRunning, setIsRunning] = useState<boolean>(false);
-	const [totalTime, setTotalTime] = useState<number>(0);
-	const [timerIsStarted, setTimerIsStarted] = useState<boolean>(false);
 
-	const { testedText, getText } = useTextStore((state) => state);
+	const { arrOfCheckedSimbols, setArrOfCheckedSimbols } = useTestStore((state) => state);
+	const { countOfFailed, setCountOfFailed } = useTestStore((state) => state);
+	const { totalTime, setTotalTime } = useTestStore((state) => state);
+	const { timerIsStarted, setTimerIsStarted } = useTestStore((state) => state);
+	const { testedText, getText } = useTestStore((state) => state);
+	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
+
 	const { i18n } = useTranslation();
 	const myInterval: number | any = useRef(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -38,14 +32,14 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 			setTypedFullText(value);
 			setArrOfSimbols((prevState) => {
 				const checkedSimbol: string | undefined = prevState.shift();
-				setArrOfCheckedSimbols((prevState: string[]) => [...prevState, checkedSimbol || ""]);
+				setArrOfCheckedSimbols(checkedSimbol || "");
 				setCurrentSimbol(prevState[0]);
 				return prevState;
 			});
 			setIsCheckedSimbolFailed(false);
 		} else {
 			setIsCheckedSimbolFailed(true);
-			setCountOfFailed((prevState) => prevState + 1);
+			setCountOfFailed();
 		}
 	};
 	const toggleTimer = () => {
@@ -63,7 +57,7 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 	useEffect(() => {
 		if (isRunning) {
 			myInterval.current = setInterval(() => {
-				setTotalTime((counter) => counter + 1);
+				setTotalTime();
 			}, 1000);
 		} else {
 			clearInterval(myInterval.current);
@@ -82,7 +76,8 @@ const Test = ({ setAccuracy, setCurrentSpeed }: ITestProps) => {
 	}, [arrOfSimbols.length === 0, testedText]);
 	useEffect(() => {
 		if (timerIsStarted) {
-			setCurrentSpeed(Math.floor((arrOfCheckedSimbols.length / totalTime) * 60));
+			const speed = Math.floor((arrOfCheckedSimbols.length / totalTime) * 60);
+			setCurrentSpeed(speed === Infinity ? 0 : speed);
 			setAccuracy(+(100 - (countOfFailed / testedText.length) * 100).toFixed(1));
 		}
 	}, [totalTime, timerIsStarted]);

@@ -4,16 +4,11 @@ import { useTranslation } from "react-i18next";
 
 import InfoItem from "./InfoItem";
 import { ReactComponent as RetryIcon } from "icons/retry.svg";
-import { useTextStore } from "@/store/textStore";
+import { useTestStore } from "@/store/testStore";
 
-interface ITestInfoProps {
-	speed: number;
-	accuracy: number;
-}
-
-const TestInfo = ({ speed, accuracy }: ITestInfoProps) => {
+const TestInfo = () => {
 	const { t } = useTranslation();
-	const { changeText } = useTextStore((state) => state);
+	const { changeText, currentSpeed: speed, accuracy } = useTestStore((state) => state);
 
 	return (
 		<TestInfoWrapper>
