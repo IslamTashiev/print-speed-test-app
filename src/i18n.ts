@@ -6,24 +6,24 @@ import translationRU from "./locales/ru.json";
 import translationUKR from "./locales/ukr.json";
 
 const resources = {
-    en: {
-        translation: translationEN,
-    },
-    ru: {
-        translation: translationRU,
-    },
-    ukr: {
-        translation: translationUKR,
-    },
+	en: {
+		translation: translationEN,
+	},
+	ru: {
+		translation: translationRU,
+	},
+	ukr: {
+		translation: translationUKR,
+	},
 };
 
 i18n.use(initReactI18next).init({
-    resources,
-    lng: "ru", // Язык по умолчанию
-    fallbackLng: "ru", // Язык, который будет использоваться, если перевод для текущего языка не найден
-    interpolation: {
-        escapeValue: false, // Разрешить использование HTML-тегов в переводах
-    },
+	resources,
+	lng: localStorage.getItem("language") || "ru", // Язык по умолчанию
+	fallbackLng: "ru", // Язык, который будет использоваться, если перевод для текущего языка не найден
+	interpolation: {
+		escapeValue: false, // Разрешить использование HTML-тегов в переводах
+	},
 });
 
 export default i18n;

@@ -76,7 +76,7 @@ export const useTestStore = create<ITextStoreState>((set, get) => ({
 
 const getRandomElement = (arr: IData[], lastRandomText: string): string | undefined => {
 	if (arr.length === 0) {
-		return undefined;
+		return "";
 	}
 	if (arr.length === 1) {
 		return arr[0].text;

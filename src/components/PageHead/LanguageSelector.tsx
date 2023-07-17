@@ -30,6 +30,7 @@ const LanguageSelector = (): JSX.Element => {
 		getText(language);
 		resetAllStates();
 		setIsOpen(false);
+		localStorage.setItem("language", language);
 	};
 
 	return (
