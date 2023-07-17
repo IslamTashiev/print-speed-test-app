@@ -18,5 +18,7 @@
     "help_text": "Or sign in with",
     "already_have_an_account": "Already have an account?",
     "dont_have_an_account": "Don't have an account?",
-    "logout":"Logout"
+    "logout":"Logout",
+    "no_text": "There are no tests in the language you selected. Choose other languages or submit a request to have your text added.",
+    "leave_a_request_text": "Leave request"
 }

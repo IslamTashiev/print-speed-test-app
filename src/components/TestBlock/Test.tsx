@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Box, Skeleton, Typography, styled } from "@mui/material";
+import { Box, Button, Skeleton, Typography, styled } from "@mui/material";
 import clsx from "clsx";
 import { useTestStore } from "@/store/testStore";
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const Test = () => {
 	const [arrOfSimbols, setArrOfSimbols] = useState<string[]>([]);
@@ -15,10 +16,10 @@ const Test = () => {
 	const { countOfFailed, setCountOfFailed } = useTestStore((state) => state);
 	const { totalTime, setTotalTime } = useTestStore((state) => state);
 	const { timerIsStarted, setTimerIsStarted } = useTestStore((state) => state);
-	const { testedText, getText } = useTestStore((state) => state);
+	const { testedText, getText, textsIsLoaded } = useTestStore((state) => state);
 	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
 
-	const { i18n } = useTranslation();
+	const { i18n, t } = useTranslation();
 	const myInterval: number | any = useRef(null);
 	const inputRef = useRef<HTMLInputElement>(null);
 
@@ -98,7 +99,7 @@ const Test = () => {
 
 	return (
 		<TestWrapper>
-			{testedText ? (
+			{testedText && textsIsLoaded ? (
 				<>
 					<Box>
 						{arrOfCheckedSimbols.map((char, index) => (
@@ -143,11 +144,20 @@ const Test = () => {
 						className='test-input'
 					/>
 				</>
-			) : (
+			) : !testedText && !textsIsLoaded ? (
 				<Box>
 					{[90, 92, 96, 99, 100, 90, 99, 100, 85, 90, 92].map((item, index) => (
 						<Skeleton key={index} width={item + "%"} />
 					))}
+				</Box>
+			) : (
+				<Box className='no-text-wrapper'>
+					<Typography color='text.primary' variant='h4'>
+						{t("no_text")}
+					</Typography>
+					<Link to='/texts/new-text/request'>
+						<Button variant='outlined'>{t("leave_a_request_text")}</Button>
+					</Link>
 				</Box>
 			)}
 		</TestWrapper>
@@ -191,6 +201,21 @@ const TestWrapper = styled(Box)(() => ({
 		border: "none",
 		color: "transparent",
 		outline: 0,
+	},
+	".no-text-wrapper": {
+		display: "flex",
+		justifyContent: "center",
+		alignItems: "center",
+		flexDirection: "column",
+		width: "100%",
+		height: "100%",
+
+		h4: {
+			fontSize: 20,
+			marginBottom: 16,
+			maxWidth: "80%",
+			textAlign: "center",
+		},
 	},
 }));
 

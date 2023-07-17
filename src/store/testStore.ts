@@ -11,6 +11,7 @@ interface ITextStoreState {
 	arrOfCheckedSimbols: string[];
 	currentSpeed: number;
 	accuracy: number;
+	textsIsLoaded: boolean;
 	getText: (language: string) => void;
 	changeText: () => void;
 	setTotalTime: () => void;
@@ -34,8 +35,9 @@ export const useTestStore = create<ITextStoreState>((set, get) => ({
 	arrOfCheckedSimbols: [],
 	currentSpeed: 0,
 	accuracy: 100,
+	textsIsLoaded: false,
 	getText: async (language: string) => {
-		set({ testedText: "" });
+		set({ testedText: "", textsIsLoaded: false });
 		const q = query(collection(db, "texts"), where("textLanguage", "==", language));
 		const textsSnapshot = await getDocs(q);
 		const data: IData[] = textsSnapshot.docs.map((item) => ({
@@ -43,7 +45,7 @@ export const useTestStore = create<ITextStoreState>((set, get) => ({
 			id: item.id,
 		}));
 		set({ allTexts: data });
-		set({ testedText: getRandomElement(data, "") });
+		set({ testedText: getRandomElement(data, ""), textsIsLoaded: true });
 	},
 	changeText: () => {
 		const { resetAllStates } = get();
