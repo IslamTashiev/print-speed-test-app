@@ -1,6 +1,7 @@
 import {
 	Box,
 	Button,
+	Dialog,
 	Divider,
 	List,
 	ListItem,
@@ -15,6 +16,8 @@ import { ReactComponent as StarIcon } from "icons/menu-star.svg";
 import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
 import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
+import { useState } from "react";
+import LogoutConfirmModal from "./LogoutConfirmModal";
 
 const sideBarItems = [
 	{ title: "history", icon: <HistoryIcon /> },
@@ -23,8 +26,10 @@ const sideBarItems = [
 ];
 
 const SideBar = () => {
+	const [logoutConfirmModal, setLogoutConfirmModal] = useState<boolean>(false);
+
 	const { t } = useTranslation();
-	const { user, logout } = useUserStore((state) => state);
+	const { user } = useUserStore((state) => state);
 
 	return user ? (
 		<SideBarWrapper>
@@ -64,9 +69,14 @@ const SideBar = () => {
 				<Divider />
 			</Box>
 			<Box className='logout-button-wrapper'>
-				<Button onClick={logout} variant='text' className='logout-button'>
+				<Button
+					onClick={() => setLogoutConfirmModal(true)}
+					variant='text'
+					className='logout-button'
+				>
 					{t("logout")}
 				</Button>
+				<LogoutConfirmModal setOpen={setLogoutConfirmModal} open={logoutConfirmModal} />
 			</Box>
 		</SideBarWrapper>
 	) : null;
