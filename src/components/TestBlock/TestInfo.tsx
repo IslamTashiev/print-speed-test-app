@@ -17,7 +17,7 @@ const TestInfo = () => {
 				<InfoItem type='speed' value={speed} />
 			</Box>
 			<Button
-				disabled={allTexts.length === 1}
+				disabled={allTexts.length <= 1}
 				onClick={changeText}
 				className='retry-button'
 				variant='text'
