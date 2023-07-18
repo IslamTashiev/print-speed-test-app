@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { useTestStore } from "@/store/testStore";
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
+import ResultModal from "../ResultModal/ResultModal";
 
 const Test = () => {
 	const [arrOfSimbols, setArrOfSimbols] = useState<string[]>([]);
@@ -11,6 +12,7 @@ const Test = () => {
 	const [currentSimbol, setCurrentSimbol] = useState<string>("");
 	const [isCheckedSimbolFailed, setIsCheckedSimbolFailed] = useState<boolean>(false);
 	const [isRunning, setIsRunning] = useState<boolean>(false);
+	const [resultModal, setResultModal] = useState<boolean>(false);
 
 	const { arrOfCheckedSimbols, setArrOfCheckedSimbols } = useTestStore((state) => state);
 	const { countOfFailed, setCountOfFailed } = useTestStore((state) => state);
@@ -51,6 +53,7 @@ const Test = () => {
 		clearInterval(myInterval.current);
 		myInterval.current = null;
 		setIsRunning(false);
+		setResultModal(true);
 	};
 
 	document.addEventListener("click", () => inputRef.current?.focus());
@@ -71,7 +74,11 @@ const Test = () => {
 		}
 	}, [timerIsStarted]);
 	useEffect(() => {
-		if (arrOfSimbols.length === 0 && arrOfCheckedSimbols.length === testedText.length) {
+		if (
+			arrOfSimbols.length === 0 &&
+			testedText !== "" &&
+			arrOfCheckedSimbols.length === testedText.length
+		) {
 			resetCounter();
 		}
 	}, [arrOfSimbols.length === 0, testedText]);
@@ -160,6 +167,7 @@ const Test = () => {
 					</Link>
 				</Box>
 			)}
+			<ResultModal open={resultModal} setOpen={setResultModal} />
 		</TestWrapper>
 	);
 };

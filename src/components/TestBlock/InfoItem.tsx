@@ -4,9 +4,10 @@ import { useTranslation } from "react-i18next";
 
 import { ReactComponent as SpeedIcon } from "icons/info-speed.svg";
 import { ReactComponent as AccuracyIcon } from "icons/info-accuracy.svg";
+import { ReactComponent as BestIcon } from "icons/info-best.svg";
 
 interface IInfoItemProps {
-	type: "accuracy" | "speed";
+	type: "accuracy" | "speed" | "bestPlace";
 	direction?: "vertical" | "horizontal";
 	value?: number;
 	onModal?: boolean;
@@ -23,6 +24,11 @@ const infoTypes = {
 		titleKey: "speed",
 		prefixKey: "speed_prefix",
 	},
+	bestPlace: {
+		icon: <BestIcon />,
+		titleKey: "best_place",
+		prefixKey: "",
+	},
 };
 
 const InfoItem = ({ type, value, onModal, direction = "vertical" }: IInfoItemProps) => {
@@ -37,7 +43,7 @@ const InfoItem = ({ type, value, onModal, direction = "vertical" }: IInfoItemPro
 				<Typography variant='body2' color='text.dark' className='info-item-head-title'>
 					{t(currentInfo.titleKey)}
 				</Typography>
-				{onModal && (
+				{onModal && currentInfo.prefixKey && (
 					<Typography variant='body2'>
 						{"("}
 						{t(currentInfo.prefixKey)}
