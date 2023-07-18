@@ -14,6 +14,9 @@ export interface IUserData {
 	email: string;
 	password: string;
 	name: string;
+	bestSpeed: number;
+	bestAccuracy: number;
+	bestPlace: number;
 }
 
 const AuthPage = () => {
@@ -22,14 +25,21 @@ const AuthPage = () => {
 	const [name, setName] = useState("");
 
 	const { authType } = useParams();
-	const { login, register } = useUserStore((state) => state);
+	const { login, register, createUserInDb } = useUserStore((state) => state);
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
 	const isRegisterPage = authType === "register";
 
 	const onSubmit = () => {
-		const userData: IUserData = { email, password, name };
+		const userData: IUserData = {
+			email,
+			password,
+			name,
+			bestAccuracy: 0,
+			bestPlace: 0,
+			bestSpeed: 0,
+		};
 		if (!isRegisterPage) {
 			login(userData);
 		} else {
@@ -42,7 +52,14 @@ const AuthPage = () => {
 	};
 	const handleSignInWithGoogle = async () => {
 		provider.setCustomParameters({ prompt: "select_account" });
-		await signInWithPopup(auth, provider);
+		const { user } = await signInWithPopup(auth, provider);
+		createUserInDb({
+			bestAccuracy: 0,
+			bestPlace: 0,
+			bestSpeed: 0,
+			photoURL: user.photoURL,
+			uid: user.uid,
+		});
 		navigate("/");
 	};
 
