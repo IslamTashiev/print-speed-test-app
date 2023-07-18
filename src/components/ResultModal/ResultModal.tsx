@@ -1,18 +1,25 @@
 import { Box, Dialog, Typography, styled } from "@mui/material";
 import InfoItem from "../TestBlock/InfoItem";
 
+interface IResultData {
+	accuracy: number;
+	speed: number;
+	bestPlace: number;
+}
+
 interface IResultModalProps {
 	open: boolean;
+	result: IResultData;
 	setOpen: (value: boolean) => void;
 }
 
-const ResultModal = ({ open, setOpen }: IResultModalProps) => {
+const ResultModal = ({ open, setOpen, result }: IResultModalProps) => {
 	const handleClose = () => {
 		setOpen(false);
 	};
 
 	return (
-		<ResultModalWrapper onClose={handleClose} open={true}>
+		<ResultModalWrapper onClose={handleClose} open={open}>
 			<Typography variant='h5' className='result-modal-title' color='text.primary'>
 				Успех уже близко!
 			</Typography>
@@ -20,19 +27,19 @@ const ResultModal = ({ open, setOpen }: IResultModalProps) => {
 				<Box className='result-modal-item'>
 					<InfoItem type='speed' onModal direction='horizontal' />
 					<Typography variant='h6' className='item-value'>
-						200
+						{result.speed}
 					</Typography>
 				</Box>
 				<Box className='result-modal-item'>
 					<InfoItem type='accuracy' onModal direction='horizontal' />
 					<Typography variant='h6' className='item-value'>
-						200
+						{result.accuracy}
 					</Typography>
 				</Box>
 				<Box className='result-modal-item'>
 					<InfoItem type='bestPlace' onModal direction='horizontal' />
 					<Typography component='span' className='item-value'>
-						200
+						{result.bestPlace}
 					</Typography>
 				</Box>
 			</Box>

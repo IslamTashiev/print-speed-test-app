@@ -20,6 +20,7 @@ const Test = () => {
 	const { timerIsStarted, setTimerIsStarted } = useTestStore((state) => state);
 	const { testedText, getText, textsIsLoaded } = useTestStore((state) => state);
 	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
+	const { accuracy, currentSpeed: speed } = useTestStore((state) => state);
 
 	const { i18n, t } = useTranslation();
 	const myInterval: number | any = useRef(null);
@@ -167,7 +168,11 @@ const Test = () => {
 					</Link>
 				</Box>
 			)}
-			<ResultModal open={resultModal} setOpen={setResultModal} />
+			<ResultModal
+				result={{ accuracy, speed, bestPlace: 0 }}
+				open={resultModal}
+				setOpen={setResultModal}
+			/>
 		</TestWrapper>
 	);
 };
