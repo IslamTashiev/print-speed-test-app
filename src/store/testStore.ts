@@ -12,6 +12,7 @@ interface ITextStoreState {
 	currentSpeed: number;
 	accuracy: number;
 	textsIsLoaded: boolean;
+	myPlace: number;
 	getText: (language: string) => void;
 	changeText: () => void;
 	setTotalTime: () => void;
@@ -21,6 +22,7 @@ interface ITextStoreState {
 	setCurrentSpeed: (value: number) => void;
 	setAccuracy: (value: number) => void;
 	resetAllStates: () => void;
+	setMyPlace: (value: number) => void;
 }
 interface IData {
 	id: string;
@@ -36,6 +38,14 @@ export const useTestStore = create<ITextStoreState>((set, get) => ({
 	currentSpeed: 0,
 	accuracy: 100,
 	textsIsLoaded: false,
+	myPlace: 0,
+	setMyPlace: async (currentSpeed: number) => {
+		const q = query(collection(db, "users"), where("bestSpeed", ">", currentSpeed));
+		const usersSnapshot = await getDocs(q);
+		const data = usersSnapshot.docs.map((item) => ({ id: item.id, ...item.data() }));
+
+		set({ myPlace: data.length + 1 });
+	},
 	getText: async (language: string) => {
 		set({ testedText: "", textsIsLoaded: false });
 		const q = query(collection(db, "texts"), where("textLanguage", "==", language));

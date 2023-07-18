@@ -21,6 +21,7 @@ const Test = () => {
 	const { testedText, getText, textsIsLoaded } = useTestStore((state) => state);
 	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
 	const { accuracy, currentSpeed: speed } = useTestStore((state) => state);
+	const { myPlace, setMyPlace } = useTestStore((state) => state);
 
 	const { i18n, t } = useTranslation();
 	const myInterval: number | any = useRef(null);
@@ -49,12 +50,12 @@ const Test = () => {
 	const toggleTimer = () => {
 		setIsRunning((isRunning) => !isRunning);
 	};
-
 	const resetCounter = () => {
 		clearInterval(myInterval.current);
 		myInterval.current = null;
 		setIsRunning(false);
 		setResultModal(true);
+		setMyPlace(speed);
 	};
 
 	document.addEventListener("click", () => inputRef.current?.focus());
@@ -169,7 +170,7 @@ const Test = () => {
 				</Box>
 			)}
 			<ResultModal
-				result={{ accuracy, speed, bestPlace: 0 }}
+				result={{ accuracy, speed, bestPlace: myPlace }}
 				open={resultModal}
 				setOpen={setResultModal}
 			/>

@@ -1,4 +1,4 @@
-import { Box, Dialog, Typography, styled } from "@mui/material";
+import { Box, CircularProgress, Dialog, Typography, styled } from "@mui/material";
 import InfoItem from "../TestBlock/InfoItem";
 
 interface IResultData {
@@ -38,9 +38,13 @@ const ResultModal = ({ open, setOpen, result }: IResultModalProps) => {
 				</Box>
 				<Box className='result-modal-item'>
 					<InfoItem type='bestPlace' onModal direction='horizontal' />
-					<Typography component='span' className='item-value'>
-						{result.bestPlace}
-					</Typography>
+					{result.bestPlace ? (
+						<Typography component='span' className='item-value'>
+							{result.bestPlace}
+						</Typography>
+					) : (
+						<CircularProgress style={{ width: 20, height: 20 }} />
+					)}
 				</Box>
 			</Box>
 			<Typography variant='body2' className='result-info-text'>
