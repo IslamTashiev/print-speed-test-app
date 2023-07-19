@@ -8,7 +8,17 @@ import {
 } from "firebase/auth";
 import { IUserData } from "@/pages/AuthPage";
 import { auth, db } from "@/firebase/config";
-import { addDoc, collection, doc, getDoc, query, setDoc, where } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	doc,
+	getDoc,
+	getDocs,
+	query,
+	setDoc,
+	updateDoc,
+	where,
+} from "firebase/firestore";
 
 interface IUserState {
 	user: FirebaseUser | null;
@@ -17,6 +27,7 @@ interface IUserState {
 	setUser: (value: FirebaseUser | null) => void;
 	logout: () => void;
 	createUserInDb: (userData: IUserInfo) => void;
+	updateUserStat: (userData: IUpdatedUser) => void;
 }
 
 interface IUserInfo {
@@ -25,6 +36,14 @@ interface IUserInfo {
 	bestSpeed: number;
 	photoURL: string | null;
 	uid: string;
+}
+interface IUpdatedUser {
+	bestPlace: number;
+	bestAccuracy: number;
+	bestSpeed: number;
+	photoURL?: string | null;
+	uid: string;
+	id?: string;
 }
 
 export const useUserStore = create<IUserState>((set, get) => ({
@@ -67,10 +86,10 @@ export const useUserStore = create<IUserState>((set, get) => ({
 		const { bestAccuracy, bestPlace, bestSpeed, photoURL, uid } = userData;
 
 		const userRef = collection(db, "users");
-		const userDocRef = doc(db, "users", uid);
-		const userDocSnapshot = await getDoc(userDocRef);
+		const q = query(collection(db, "users"), where("uid", "==", uid));
+		const userDocSnapshot = await getDocs(q);
 
-		if (!userDocSnapshot.exists()) {
+		if (userDocSnapshot.docs.length === 0) {
 			await addDoc(userRef, {
 				bestAccuracy,
 				bestPlace,
@@ -78,6 +97,29 @@ export const useUserStore = create<IUserState>((set, get) => ({
 				uid: uid,
 				photoURL: photoURL,
 			});
+		}
+	},
+	updateUserStat: async (userData: IUpdatedUser) => {
+		const { bestAccuracy, bestPlace, bestSpeed } = userData;
+		const { user } = get();
+
+		if (user) {
+			const q = query(collection(db, "users"), where("uid", "==", user.uid));
+			const userDocSnapshot = await getDocs(q);
+			const userDoc = userDocSnapshot.docs.map((item) => ({
+				id: item.id,
+				...item.data(),
+			}))[0] as IUpdatedUser;
+
+			if (userDoc && userDoc.id) {
+				const userDocRef = doc(db, "users", userDoc.id);
+
+				if (userDoc.bestSpeed < bestSpeed) {
+					await updateDoc(userDocRef, { bestSpeed });
+					await updateDoc(userDocRef, { bestAccuracy });
+					await updateDoc(userDocRef, { bestPlace });
+				}
+			}
 		}
 	},
 }));
