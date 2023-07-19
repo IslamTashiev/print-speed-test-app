@@ -18,6 +18,8 @@ import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
 import { useState } from "react";
 import LogoutConfirmModal from "./LogoutConfirmModal";
+import ResultModal from "../ResultModal/ResultModal";
+import { useTestStore } from "@/store/testStore";
 
 const sideBarItems = [
 	{ title: "history", icon: <HistoryIcon /> },
@@ -27,9 +29,18 @@ const sideBarItems = [
 
 const SideBar = () => {
 	const [logoutConfirmModal, setLogoutConfirmModal] = useState<boolean>(false);
+	const [isResultMOdalOpen, setIsResultMOdalOpen] = useState<boolean>(false);
 
+	const { getUserStats, userStats } = useUserStore((state) => state);
+	const { setMyPlace, myPlace } = useTestStore((state) => state);
 	const { t } = useTranslation();
 	const { user } = useUserStore((state) => state);
+
+	const handleShowResultModal = () => {
+		getUserStats();
+		setIsResultMOdalOpen(true);
+		setMyPlace(userStats?.bestSpeed || 0);
+	};
 
 	return user ? (
 		<SideBarWrapper>
@@ -42,7 +53,7 @@ const SideBar = () => {
 				</Box>
 				<Divider />
 				<List>
-					<ListItem>
+					<ListItem onClick={handleShowResultModal}>
 						<ListItemButton>
 							<Box className='menu-item'>
 								<StarIcon />
@@ -78,6 +89,16 @@ const SideBar = () => {
 				</Button>
 				<LogoutConfirmModal setOpen={setLogoutConfirmModal} open={logoutConfirmModal} />
 			</Box>
+
+			<ResultModal
+				open={isResultMOdalOpen}
+				setOpen={setIsResultMOdalOpen}
+				result={{
+					accuracy: userStats?.bestAccuracy,
+					bestPlace: myPlace,
+					speed: userStats?.bestSpeed,
+				}}
+			/>
 		</SideBarWrapper>
 	) : null;
 };

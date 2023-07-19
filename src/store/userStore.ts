@@ -22,12 +22,14 @@ import {
 
 interface IUserState {
 	user: FirebaseUser | null;
+	userStats: IUpdatedUser | null;
 	login: (value: IUserData) => void;
 	register: (value: IUserData) => void;
 	setUser: (value: FirebaseUser | null) => void;
 	logout: () => void;
 	createUserInDb: (userData: IUserInfo) => void;
 	updateUserStat: (userData: IUpdatedUser) => void;
+	getUserStats: () => void;
 }
 
 interface IUserInfo {
@@ -48,6 +50,7 @@ interface IUpdatedUser {
 
 export const useUserStore = create<IUserState>((set, get) => ({
 	user: null,
+	userStats: null,
 	login: async (userData: IUserData) => {
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
@@ -120,6 +123,20 @@ export const useUserStore = create<IUserState>((set, get) => ({
 					await updateDoc(userDocRef, { bestPlace });
 				}
 			}
+		}
+	},
+	getUserStats: async () => {
+		const { user } = get();
+
+		if (user) {
+			const q = query(collection(db, "users"), where("uid", "==", user.uid));
+			const userDocSnapshot = await getDocs(q);
+			const userDoc = userDocSnapshot.docs.map((item) => ({
+				id: item.id,
+				...item.data(),
+			}))[0] as IUpdatedUser;
+
+			set({ userStats: userDoc });
 		}
 	},
 }));

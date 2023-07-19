@@ -2,9 +2,9 @@ import { Box, CircularProgress, Dialog, Typography, styled } from "@mui/material
 import InfoItem from "../TestBlock/InfoItem";
 
 interface IResultData {
-	accuracy: number;
-	speed: number;
-	bestPlace: number;
+	accuracy: number | undefined;
+	speed: number | undefined;
+	bestPlace: number | undefined;
 }
 
 interface IResultModalProps {
@@ -26,19 +26,28 @@ const ResultModal = ({ open, setOpen, result }: IResultModalProps) => {
 			<Box className='result-modal-info'>
 				<Box className='result-modal-item'>
 					<InfoItem type='speed' onModal direction='horizontal' />
-					<Typography variant='h6' className='item-value'>
-						{result.speed}
-					</Typography>
+					{result?.speed ? (
+						<Typography component='span' className='item-value'>
+							{result?.speed}
+						</Typography>
+					) : (
+						<CircularProgress style={{ width: 20, height: 20 }} />
+					)}
 				</Box>
 				<Box className='result-modal-item'>
 					<InfoItem type='accuracy' onModal direction='horizontal' />
-					<Typography variant='h6' className='item-value'>
-						{result.accuracy}
-					</Typography>
+
+					{result?.accuracy ? (
+						<Typography component='span' className='item-value'>
+							{result?.accuracy}
+						</Typography>
+					) : (
+						<CircularProgress style={{ width: 20, height: 20 }} />
+					)}
 				</Box>
 				<Box className='result-modal-item'>
 					<InfoItem type='bestPlace' onModal direction='horizontal' />
-					{result.bestPlace ? (
+					{result?.bestPlace ? (
 						<Typography component='span' className='item-value'>
 							{result.bestPlace}
 						</Typography>
