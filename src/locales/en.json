@@ -46,5 +46,7 @@
     "modal_title_9" : "Success is a journey, not a destination!",
     "modal_title_10" : "You can do anything you can imagine!",
     "modal_title_11" : "Hooray! You set the record!",
-    "modal_title_12" : "Your Highest Score"
+    "modal_title_12" : "Your Highest Score",
+    "confirm" : "Confirm",
+    "confirm_modal_title" : "Are you sure you want to start over?"
 }

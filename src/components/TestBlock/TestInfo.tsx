@@ -1,14 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Box, Button, styled } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 import InfoItem from "./InfoItem";
 import { ReactComponent as RetryIcon } from "icons/retry.svg";
 import { useTestStore } from "@/store/testStore";
+import ConfirmationModal from "../ConfirmModal/ConfirmModal";
 
 const TestInfo = () => {
+	const [isConfirmModalShowed, setIsConfirmModalShowed] = useState<boolean>(false);
+
 	const { t } = useTranslation();
-	const { changeText, currentSpeed: speed, accuracy, allTexts } = useTestStore((state) => state);
+	const {
+		changeText,
+		currentSpeed: speed,
+		accuracy,
+		allTexts,
+		arrOfCheckedSimbols,
+	} = useTestStore((state) => state);
+
+	const handleRetry = () => {
+		if (arrOfCheckedSimbols.length > 0) {
+			setIsConfirmModalShowed(true);
+		} else {
+			changeText();
+		}
+	};
+	const handleConfirm = () => {
+		changeText();
+		setIsConfirmModalShowed(false);
+	};
 
 	return (
 		<TestInfoWrapper>
@@ -18,13 +39,21 @@ const TestInfo = () => {
 			</Box>
 			<Button
 				disabled={allTexts.length <= 1}
-				onClick={changeText}
+				onClick={handleRetry}
 				className='retry-button'
 				variant='text'
 				startIcon={<RetryIcon />}
 			>
 				{t("retry")}
 			</Button>
+			<ConfirmationModal
+				open={isConfirmModalShowed}
+				onClose={() => setIsConfirmModalShowed(false)}
+				onConfirm={handleConfirm}
+				cancel='cancel'
+				confirm='confirm'
+				title='confirm_modal_title'
+			/>
 		</TestInfoWrapper>
 	);
 };
