@@ -1,4 +1,4 @@
-import create, { State, SetState } from "zustand";
+import create from "zustand";
 import {
 	User as FirebaseUser,
 	createUserWithEmailAndPassword,
@@ -8,21 +8,13 @@ import {
 } from "firebase/auth";
 import { IUserData } from "@/pages/AuthPage";
 import { auth, db } from "@/firebase/config";
-import {
-	addDoc,
-	collection,
-	doc,
-	getDoc,
-	getDocs,
-	query,
-	setDoc,
-	updateDoc,
-	where,
-} from "firebase/firestore";
+import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import { getMonthByIndex } from "@/utils/getMonthByIndex";
 
 interface IUserState {
 	user: FirebaseUser | null;
 	userStats: IUpdatedUser | null;
+	historyItems: IHistoryItem[];
 	login: (value: IUserData) => void;
 	register: (value: IUserData) => void;
 	setUser: (value: FirebaseUser | null) => void;
@@ -30,6 +22,16 @@ interface IUserState {
 	createUserInDb: (userData: IUserInfo) => void;
 	updateUserStat: (userData: IUpdatedUser) => void;
 	getUserStats: () => void;
+	setHistoryItem: (speed: number, accuracy: number) => void;
+}
+
+interface IHistoryItem {
+	speed: number;
+	accuracy: number;
+	month: string;
+	day: number;
+	year: number;
+	time: string;
 }
 
 interface IUserInfo {
@@ -51,6 +53,7 @@ export interface IUpdatedUser {
 export const useUserStore = create<IUserState>((set, get) => ({
 	user: null,
 	userStats: null,
+	historyItems: [],
 	login: async (userData: IUserData) => {
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
@@ -137,6 +140,31 @@ export const useUserStore = create<IUserState>((set, get) => ({
 			}))[0] as IUpdatedUser;
 
 			set({ userStats: userDoc });
+		}
+	},
+	setHistoryItem: (speed: number, accuracy: number) => {
+		const date = new Date();
+		const month = getMonthByIndex(date.getMonth());
+		const day = date.getDate();
+		const year = date.getFullYear();
+		const time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+
+		const historyItem: IHistoryItem = { speed, accuracy, month, day, year, time };
+		let myHistoryJson = localStorage.getItem("history");
+
+		if (myHistoryJson) {
+			let myHistory = JSON.parse(myHistoryJson);
+			localStorage.setItem("history", JSON.stringify([...myHistory, historyItem]));
+		} else {
+			localStorage.setItem("history", JSON.stringify([historyItem]));
+		}
+
+		set(({ historyItems }) => ({ historyItems: [...historyItems, historyItem] }));
+	},
+	getHistoryItems: () => {
+		const historyItemsJson = localStorage.getItem("history");
+		if (historyItemsJson) {
+			set({ historyItems: JSON.parse(historyItemsJson) });
 		}
 	},
 }));

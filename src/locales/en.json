@@ -48,5 +48,17 @@
     "modal_title_11" : "Hooray! You set the record!",
     "modal_title_12" : "Your Highest Score",
     "confirm" : "Confirm",
-    "confirm_modal_title" : "Are you sure you want to start over?"
+    "confirm_modal_title" : "Are you sure you want to start over?",
+    "month_1" : "January",
+    "month_2" : "February",
+    "month_3" : "March",
+    "month_4" : "April",
+    "month_5" : "May",
+    "month_6" : "June",
+    "month_7" : "July",
+    "month_8" : "August",
+    "month_9" : "September",
+    "month_10" : "october",
+    "month_11" : "November",
+    "month_12" : "December"
 }

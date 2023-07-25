@@ -24,7 +24,7 @@ const Test = () => {
 	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
 	const { accuracy, currentSpeed: speed } = useTestStore((state) => state);
 	const { myPlace, setMyPlace } = useTestStore((state) => state);
-	const { updateUserStat, user, userStats } = useUserStore((state) => state);
+	const { updateUserStat, user, userStats, setHistoryItem } = useUserStore((state) => state);
 
 	const { generateTitles } = useTitleStore((state) => state);
 	const { i18n, t } = useTranslation();
@@ -61,6 +61,7 @@ const Test = () => {
 		setResultModal(true);
 		setMyPlace(speed);
 		generateTitles(userStats, speed);
+		setHistoryItem(speed, accuracy);
 		if (user) {
 			updateUserStat({
 				bestAccuracy: accuracy,
