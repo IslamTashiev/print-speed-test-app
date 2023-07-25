@@ -23,9 +23,10 @@ interface IUserState {
 	updateUserStat: (userData: IUpdatedUser) => void;
 	getUserStats: () => void;
 	setHistoryItem: (speed: number, accuracy: number) => void;
+	getHistoryItems: () => void;
 }
 
-interface IHistoryItem {
+export interface IHistoryItem {
 	speed: number;
 	accuracy: number;
 	month: string;
