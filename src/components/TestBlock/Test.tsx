@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import ResultModal from "../ResultModal/ResultModal";
 import { useUserStore } from "@/store/userStore";
+import { useTitleStore } from "@/store/resultTitleStore";
 
 const Test = () => {
 	const [arrOfSimbols, setArrOfSimbols] = useState<string[]>([]);
@@ -23,8 +24,9 @@ const Test = () => {
 	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
 	const { accuracy, currentSpeed: speed } = useTestStore((state) => state);
 	const { myPlace, setMyPlace } = useTestStore((state) => state);
-	const { updateUserStat, user } = useUserStore((state) => state);
+	const { updateUserStat, user, userStats } = useUserStore((state) => state);
 
+	const { generateTitles } = useTitleStore((state) => state);
 	const { i18n, t } = useTranslation();
 	const myInterval: number | any = useRef(null);
 	const inputRef = useRef<HTMLInputElement>(null);
@@ -58,6 +60,7 @@ const Test = () => {
 		setIsRunning(false);
 		setResultModal(true);
 		setMyPlace(speed);
+		generateTitles(userStats, speed);
 		if (user) {
 			updateUserStat({
 				bestAccuracy: accuracy,

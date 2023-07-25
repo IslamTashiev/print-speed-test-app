@@ -39,7 +39,7 @@ interface IUserInfo {
 	photoURL: string | null;
 	uid: string;
 }
-interface IUpdatedUser {
+export interface IUpdatedUser {
 	bestPlace: number;
 	bestAccuracy: number;
 	bestSpeed: number;

@@ -11,15 +11,16 @@ import {
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import { useUserStore } from "@/store/userStore";
+import { useTestStore } from "@/store/testStore";
+import { useTitleStore } from "@/store/resultTitleStore";
+import { useState } from "react";
+import LogoutConfirmModal from "./LogoutConfirmModal";
+import ResultModal from "../ResultModal/ResultModal";
 
 import { ReactComponent as StarIcon } from "icons/menu-star.svg";
 import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
 import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
-import { useState } from "react";
-import LogoutConfirmModal from "./LogoutConfirmModal";
-import ResultModal from "../ResultModal/ResultModal";
-import { useTestStore } from "@/store/testStore";
 
 const sideBarItems = [
 	{ title: "history", icon: <HistoryIcon /> },
@@ -31,15 +32,15 @@ const SideBar = () => {
 	const [logoutConfirmModal, setLogoutConfirmModal] = useState<boolean>(false);
 	const [isResultMOdalOpen, setIsResultMOdalOpen] = useState<boolean>(false);
 
-	const { getUserStats, userStats } = useUserStore((state) => state);
+	const { userStats, user } = useUserStore((state) => state);
 	const { setMyPlace, myPlace } = useTestStore((state) => state);
+	const { setTitles } = useTitleStore();
 	const { t } = useTranslation();
-	const { user } = useUserStore((state) => state);
 
 	const handleShowResultModal = () => {
-		getUserStats();
 		setIsResultMOdalOpen(true);
 		setMyPlace(userStats?.bestSpeed || 0);
+		setTitles("modal_title_12", "");
 	};
 
 	return user ? (

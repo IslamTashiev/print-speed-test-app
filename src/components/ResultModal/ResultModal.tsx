@@ -1,5 +1,7 @@
 import { Box, CircularProgress, Dialog, Typography, styled } from "@mui/material";
 import InfoItem from "../TestBlock/InfoItem";
+import { useTranslation } from "react-i18next";
+import { useTitleStore } from "@/store/resultTitleStore";
 
 interface IResultData {
 	accuracy: number | undefined;
@@ -14,6 +16,9 @@ interface IResultModalProps {
 }
 
 const ResultModal = ({ open, setOpen, result }: IResultModalProps) => {
+	const { title, subTitle } = useTitleStore((state) => state);
+	const { t } = useTranslation();
+
 	const handleClose = () => {
 		setOpen(false);
 	};
@@ -21,7 +26,7 @@ const ResultModal = ({ open, setOpen, result }: IResultModalProps) => {
 	return (
 		<ResultModalWrapper onClose={handleClose} open={open}>
 			<Typography variant='h5' className='result-modal-title' color='text.primary'>
-				Успех уже близко!
+				{t(title)}
 			</Typography>
 			<Box className='result-modal-info'>
 				<Box className='result-modal-item'>
@@ -57,7 +62,7 @@ const ResultModal = ({ open, setOpen, result }: IResultModalProps) => {
 				</Box>
 			</Box>
 			<Typography variant='body2' className='result-info-text'>
-				Постарайся набирать на 9 зн./мин быстрее, чтобы побить свой же рекорд в 209 зн./мин!
+				{t(subTitle)}
 			</Typography>
 		</ResultModalWrapper>
 	);
@@ -69,6 +74,8 @@ const ResultModalWrapper = styled(Dialog)(() => ({
 		boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
 		borderRadius: "10px",
 		border: "1px solid #4C5558",
+		maxWidth: "500px",
+		width: "100%",
 	},
 	".result-modal-title": {
 		textAlign: "center",

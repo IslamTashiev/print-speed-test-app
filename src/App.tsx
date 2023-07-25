@@ -8,7 +8,7 @@ import { useUserStore } from "./store/userStore";
 import { User as FirebaseUser } from "firebase/auth";
 
 function App() {
-	const { setUser, user } = useUserStore((state) => state);
+	const { setUser, user, getUserStats } = useUserStore((state) => state);
 
 	useEffect(() => {
 		onAuthStateChanged(auth, (_user: FirebaseUser | null) => {
@@ -18,6 +18,7 @@ function App() {
 				setUser(auth.currentUser);
 			}
 		});
+		getUserStats();
 	}, [!auth.currentUser]);
 
 	return (
