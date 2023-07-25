@@ -23,7 +23,7 @@ const Test = () => {
 	const { testedText, getText, textsIsLoaded } = useTestStore((state) => state);
 	const { setAccuracy, setCurrentSpeed } = useTestStore((state) => state);
 	const { accuracy, currentSpeed: speed } = useTestStore((state) => state);
-	const { myPlace, setMyPlace } = useTestStore((state) => state);
+	const { myPlace, setMyPlace, clearArrOfCheckedSimbols } = useTestStore((state) => state);
 	const { updateUserStat, user, userStats, setHistoryItem } = useUserStore((state) => state);
 
 	const { generateTitles } = useTitleStore((state) => state);
@@ -62,6 +62,8 @@ const Test = () => {
 		setMyPlace(speed);
 		generateTitles(userStats, speed);
 		setHistoryItem(speed, accuracy);
+		clearArrOfCheckedSimbols();
+		getText(i18n.language);
 		if (user) {
 			updateUserStat({
 				bestAccuracy: accuracy,

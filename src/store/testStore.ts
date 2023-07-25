@@ -23,6 +23,7 @@ interface ITextStoreState {
 	setAccuracy: (value: number) => void;
 	resetAllStates: () => void;
 	setMyPlace: (value: number) => void;
+	clearArrOfCheckedSimbols: () => void;
 }
 interface IData {
 	id: string;
@@ -82,6 +83,7 @@ export const useTestStore = create<ITextStoreState>((set, get) => ({
 		set((state) => ({ arrOfCheckedSimbols: [...state.arrOfCheckedSimbols, newSimbol] })),
 	setCurrentSpeed: (value: number) => set({ currentSpeed: value }),
 	setAccuracy: (value: number) => set({ accuracy: value }),
+	clearArrOfCheckedSimbols: () => set({ arrOfCheckedSimbols: [] }),
 }));
 
 const getRandomElement = (arr: IData[], lastRandomText: string): string | undefined => {
