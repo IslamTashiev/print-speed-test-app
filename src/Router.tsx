@@ -3,6 +3,7 @@ import MainPage from "./pages/MainPage";
 import AuthPage from "./pages/AuthPage";
 import { useTranslation } from "react-i18next";
 import HistoryPage from "./pages/HistoryPage";
+import BestUsersPage from "./pages/BestUsersPage";
 
 interface IRoutes {
 	path: string;
@@ -19,6 +20,11 @@ const Router = () => {
 			path: "/history",
 			element: (title: string) => <HistoryPage title={title} />,
 			title: t("history"),
+		},
+		{
+			path: "/best-users",
+			element: (title: string) => <BestUsersPage title={title} />,
+			title: t("top_best"),
 		},
 		{ path: "/authorization/:authType", element: () => <AuthPage />, title: "" },
 	];
