@@ -21,11 +21,12 @@ import { ReactComponent as StarIcon } from "icons/menu-star.svg";
 import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
 import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
+import { Link } from "react-router-dom";
 
 const sideBarItems = [
-	{ title: "history", icon: <HistoryIcon /> },
-	{ title: "customize_profile", icon: <SettingsIcon /> },
-	{ title: "top_best", icon: <TopsIcon /> },
+	{ title: "history", icon: <HistoryIcon />, path: "/history" },
+	{ title: "customize_profile", icon: <SettingsIcon />, path: "/profile" },
+	{ title: "top_best", icon: <TopsIcon />, path: "/best-users" },
 ];
 
 const SideBar = () => {
@@ -67,14 +68,16 @@ const SideBar = () => {
 				<Box className='menu-list'>
 					<List>
 						{sideBarItems.map((item) => (
-							<ListItem key={item.title}>
-								<ListItemButton>
-									<Box className='menu-item'>
-										{item.icon}
-										<Typography variant='h6'>{t(item.title)}</Typography>
-									</Box>
-								</ListItemButton>
-							</ListItem>
+							<Link className='menu-link' to={item.path}>
+								<ListItem key={item.title}>
+									<ListItemButton>
+										<Box className='menu-item'>
+											{item.icon}
+											<Typography variant='h6'>{t(item.title)}</Typography>
+										</Box>
+									</ListItemButton>
+								</ListItem>
+							</Link>
 						))}
 					</List>
 				</Box>
@@ -159,6 +162,9 @@ const SideBarWrapper = styled(Box)(() => ({
 	".logout-button": {
 		width: "100%",
 		backgroundColor: "rgba(255, 82, 82, 0.10)",
+	},
+	".menu-link": {
+		textDecoration: "none",
 	},
 }));
 
