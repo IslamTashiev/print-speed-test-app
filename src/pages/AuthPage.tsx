@@ -59,6 +59,7 @@ const AuthPage = () => {
 			bestSpeed: 0,
 			photoURL: user.photoURL,
 			uid: user.uid,
+			userName: user.displayName || "Just User",
 		});
 		navigate("/");
 	};

@@ -41,6 +41,7 @@ interface IUserInfo {
 	bestSpeed: number;
 	photoURL: string | null;
 	uid: string;
+	userName: string;
 }
 export interface IUpdatedUser {
 	bestPlace: number;
@@ -81,6 +82,7 @@ export const useUserStore = create<IUserState>((set, get) => ({
 			bestSpeed,
 			uid: user.uid,
 			photoURL: user.photoURL,
+			userName: user.displayName || "Just User",
 		});
 
 		set({ user: user });
@@ -90,7 +92,7 @@ export const useUserStore = create<IUserState>((set, get) => ({
 		set({ user: null });
 	},
 	createUserInDb: async (userData: IUserInfo) => {
-		const { bestAccuracy, bestPlace, bestSpeed, photoURL, uid } = userData;
+		const { bestAccuracy, bestPlace, bestSpeed, photoURL, uid, userName } = userData;
 
 		const userRef = collection(db, "users");
 		const q = query(collection(db, "users"), where("uid", "==", uid));
@@ -101,8 +103,9 @@ export const useUserStore = create<IUserState>((set, get) => ({
 				bestAccuracy,
 				bestPlace,
 				bestSpeed,
-				uid: uid,
-				photoURL: photoURL,
+				uid,
+				photoURL,
+				userName,
 			});
 		}
 	},
