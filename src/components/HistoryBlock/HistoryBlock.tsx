@@ -14,6 +14,9 @@ const HistoryBlock = () => {
 	);
 };
 
-const HistoryBlockWrapper = styled(Box)(() => ({}));
+const HistoryBlockWrapper = styled(Box)(() => ({
+	maxHeight: "85vh",
+	overflow: "auto",
+}));
 
 export default HistoryBlock;
