@@ -16,7 +16,7 @@ const MainPage = ({ title }: IMainPageProps) => {
 };
 
 const MainPageWrapper = styled(Box)(() => ({
-	width: "80%",
+	width: "70%",
 	padding: "0 32px",
 	margin: "0 auto",
 }));
