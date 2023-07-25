@@ -8,13 +8,23 @@ import {
 } from "firebase/auth";
 import { IUserData } from "@/pages/AuthPage";
 import { auth, db } from "@/firebase/config";
-import { addDoc, collection, doc, getDocs, query, updateDoc, where } from "firebase/firestore";
+import {
+	addDoc,
+	collection,
+	doc,
+	getDocs,
+	orderBy,
+	query,
+	updateDoc,
+	where,
+} from "firebase/firestore";
 import { getMonthByIndex } from "@/utils/getMonthByIndex";
 
 interface IUserState {
 	user: FirebaseUser | null;
 	userStats: IUpdatedUser | null;
 	historyItems: IHistoryItem[];
+	bestUsers: IUserInfo[];
 	login: (value: IUserData) => void;
 	register: (value: IUserData) => void;
 	setUser: (value: FirebaseUser | null) => void;
@@ -24,6 +34,7 @@ interface IUserState {
 	getUserStats: () => void;
 	setHistoryItem: (speed: number, accuracy: number) => void;
 	getHistoryItems: () => void;
+	getBestUsers: () => void;
 }
 
 export interface IHistoryItem {
@@ -35,7 +46,7 @@ export interface IHistoryItem {
 	time: string;
 }
 
-interface IUserInfo {
+export interface IUserInfo {
 	bestPlace: number;
 	bestAccuracy: number;
 	bestSpeed: number;
@@ -56,6 +67,7 @@ export const useUserStore = create<IUserState>((set, get) => ({
 	user: null,
 	userStats: null,
 	historyItems: [],
+	bestUsers: [],
 	login: async (userData: IUserData) => {
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
@@ -170,5 +182,16 @@ export const useUserStore = create<IUserState>((set, get) => ({
 		if (historyItemsJson) {
 			set({ historyItems: JSON.parse(historyItemsJson) });
 		}
+	},
+	getBestUsers: async () => {
+		const usersRef = collection(db, "users");
+		const q = query(usersRef, orderBy("bestSpeed", "desc"));
+		const usersSnapshot = await getDocs(q);
+
+		const data = usersSnapshot.docs.map((item) => ({
+			...item.data(),
+		})) as IUserInfo[];
+
+		set({ bestUsers: data });
 	},
 }));

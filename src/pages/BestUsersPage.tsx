@@ -9,10 +9,10 @@ interface IBestUsersProps {
 }
 
 const BestUsersPage = ({ title }: IBestUsersProps) => {
-	const { getHistoryItems } = useUserStore((state) => state);
+	const { getBestUsers } = useUserStore((state) => state);
 
 	useEffect(() => {
-		getHistoryItems();
+		getBestUsers();
 	}, []);
 
 	return (

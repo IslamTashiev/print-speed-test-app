@@ -1,29 +1,32 @@
 import { Box, Typography, styled } from "@mui/material";
 import clsx from "clsx";
 import InfoItem from "../TestBlock/InfoItem";
+import { IUserInfo, useUserStore } from "@/store/userStore";
+import { useTranslation } from "react-i18next";
 
 interface IHistoryItemProps {
 	next?: boolean;
+	bestUserItem: IUserInfo;
+	index: number;
 }
 
-const HistoryItem = ({ next = false }: IHistoryItemProps) => {
+const HistoryItem = ({ next = false, bestUserItem, index }: IHistoryItemProps) => {
+	const { user } = useUserStore((state) => state);
+	const { t } = useTranslation();
 	return (
-		<HistoryItemWrapper className={clsx({ next })}>
+		<HistoryItemWrapper className={clsx({ next }, "bestuser-" + index)}>
 			<Box className='user-info'>
 				<Typography component='span' className='item-index' color='text.primary'>
-					1.
+					{index}.
 				</Typography>
-				<img
-					className='user-avatar'
-					src='https://static.vecteezy.com/system/resources/previews/008/442/086/original/illustration-of-human-icon-user-symbol-icon-modern-design-on-blank-background-free-vector.jpg'
-				/>
+				<img className='user-avatar' src={bestUserItem.photoURL || ""} />
 				<Typography component='span' className='item-index' color='text.primary'>
-					Vasilii Vasiliiev
+					{bestUserItem.userName} {user?.uid === bestUserItem.uid ? t("you") : ""}
 				</Typography>
 			</Box>
 			<Box className='item-right'>
-				<InfoItem type='speed' direction='horizontal' value={100} />
-				<InfoItem type='accuracy' direction='horizontal' value={100} />
+				<InfoItem type='speed' direction='horizontal' value={bestUserItem.bestSpeed} />
+				<InfoItem type='accuracy' direction='horizontal' value={bestUserItem.bestAccuracy} />
 			</Box>
 		</HistoryItemWrapper>
 	);
@@ -34,9 +37,26 @@ const HistoryItemWrapper = styled(Box)(() => ({
 	justifyContent: "space-between",
 	padding: "15px 20px",
 	borderRadius: "10px",
+	marginBottom: "8px",
 
+	".info-item-head-title": {
+		color: "#fff",
+	},
+	".info-item-value": {
+		width: "75px",
+		justifyContent: "end",
+	},
 	"&.next": {
 		backgroundColor: "#3F4649",
+	},
+	"&.bestuser-1": {
+		backgroundColor: "rgba(254, 216, 67, 0.90)",
+	},
+	"&.bestuser-2": {
+		backgroundColor: "rgba(192, 192, 192, 0.90)",
+	},
+	"&.bestuser-3": {
+		backgroundColor: "rgba(205, 127, 50, 0.90)",
 	},
 
 	".item-right": {
@@ -44,6 +64,12 @@ const HistoryItemWrapper = styled(Box)(() => ({
 		alignItems: "center",
 		gap: "48px",
 	},
+	".item-index": {
+		"&.best": {
+			color: "#FED843",
+		},
+	},
+
 	".user-info": {
 		display: "flex",
 		alignItems: "center",

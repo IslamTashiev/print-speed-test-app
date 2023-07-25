@@ -61,5 +61,6 @@
     "month_10" : "october",
     "month_11" : "November",
     "month_12" : "December",
-    "date_prefix": " at "
+    "date_prefix": " at ",
+    "you": "(You)"
 }
