@@ -22,7 +22,7 @@ import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
 import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
 import { ReactComponent as TestingIcon } from "icons/menu-testing.svg";
-import { ReactComponent as DuelIcon } from "icons/menu-competitive.svg";
+import { ReactComponent as DuelIcon } from "icons/menu-duel.svg";
 import { Link } from "react-router-dom";
 
 const sideBarItems = [
