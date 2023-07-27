@@ -6,6 +6,8 @@
     "customize_profile": "Customize Profile",
     "top_best": "Top best",
     "take_the_test": "Take the test",
+    "duel":"Duel",
+    "players_are_ready_to_duel": "Players are ready to duel",
     "speed_prefix": "chars/min",
     "accuracy_prefix": "%",
     "accuracy": "ACCURACY",
@@ -63,5 +65,11 @@
     "month_11" : "November",
     "month_12" : "December",
     "date_prefix": " at ",
-    "you": "(You)"
+    "you": "(You)",
+    "name":"Name",
+    "language":"Language",
+    "best_speed": "Best speed",
+    "best_accuracy": "Best accuracy",
+    "start_duel": "Start duel",
+    "dueling":"Dueling"
 }

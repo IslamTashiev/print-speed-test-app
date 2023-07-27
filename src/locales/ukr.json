@@ -6,6 +6,8 @@
     "customize_profile": "Налаштувати профіль",
     "top_best": "Топ найкращих",
     "take_the_test": "Пройти тест",
+    "duel": "Дуель",
+    "players_are_ready_to_duel":"Гравці готові до дуелі",
     "speed_prefix": "зн./хв.",
     "accuracy_prefix": "%",
     "accuracy": "ТОЧНІСТЬ",
@@ -63,5 +65,11 @@
     "month_11" : "листопада",
     "month_12" : "грудень",
     "date_prefix": " року о ",
-    "you": "(Tи)"
+    "you": "(Tи)",
+    "name":"Ім'я",
+    "language":"Мова",
+    "best_speed":"Краща швидкість",
+    "best_accuracy":"Краща точність",
+    "start_duel":"Почати дуель",
+    "dueling": "Дуелитися"
 }

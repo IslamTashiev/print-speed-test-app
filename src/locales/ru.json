@@ -6,6 +6,8 @@
     "customize_profile": "Настроить профиль",
     "top_best": "Топ лучших",
     "take_the_test": "Пройти тест",
+    "duel":"Дуэль",
+    "players_are_ready_to_duel":"Игроки готовые к дуэли",
     "speed_prefix": "зн./мин.",
     "accuracy_prefix": "%",
     "accuracy": "ТОЧНОСТЬ",
@@ -63,5 +65,11 @@
     "month_11" : "ноября",
     "month_12" : "декобря",
     "date_prefix": " года в ",
-    "you": "(Ты)"
+    "you": "(Ты)",
+    "name":"Имя",
+    "language":"Язык",
+    "best_speed":"Лучшая скорость",
+    "best_accuracy":"Лучшая точность",
+    "start_duel":"Начать дуэль",
+    "dueling":"Дуэлиться"
 }

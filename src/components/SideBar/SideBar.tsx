@@ -22,10 +22,12 @@ import { ReactComponent as HistoryIcon } from "icons/menu-history.svg";
 import { ReactComponent as SettingsIcon } from "icons/menu-settings.svg";
 import { ReactComponent as TopsIcon } from "icons/menu-tops.svg";
 import { ReactComponent as TestingIcon } from "icons/menu-testing.svg";
+import { ReactComponent as DuelIcon } from "icons/menu-competitive.svg";
 import { Link } from "react-router-dom";
 
 const sideBarItems = [
 	{ title: "take_the_test", icon: <TestingIcon />, path: "/" },
+	{ title: "duel", icon: <DuelIcon />, path: "/duel-mode" },
 	{ title: "history", icon: <HistoryIcon />, path: "/history" },
 	{ title: "customize_profile", icon: <SettingsIcon />, path: "/profile" },
 	{ title: "top_best", icon: <TopsIcon />, path: "/best-users" },

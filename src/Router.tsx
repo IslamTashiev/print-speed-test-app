@@ -4,6 +4,7 @@ import AuthPage from "./pages/AuthPage";
 import { useTranslation } from "react-i18next";
 import HistoryPage from "./pages/HistoryPage";
 import BestUsersPage from "./pages/BestUsersPage";
+import DuelPage from "./pages/DuelPage";
 
 interface IRoutes {
 	path: string;
@@ -25,6 +26,11 @@ const Router = () => {
 			path: "/best-users",
 			element: (title: string) => <BestUsersPage title={title} />,
 			title: t("top_best"),
+		},
+		{
+			path: "/duel-mode",
+			element: (title: string) => <DuelPage title={title} />,
+			title: t("players_are_ready_to_duel"),
 		},
 		{ path: "/authorization/:authType", element: () => <AuthPage />, title: "" },
 	];

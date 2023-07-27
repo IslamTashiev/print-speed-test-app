@@ -4,17 +4,17 @@ import InfoItem from "../TestBlock/InfoItem";
 import { IUserInfo, useUserStore } from "@/store/userStore";
 import { useTranslation } from "react-i18next";
 
-interface IHistoryItemProps {
+interface IBestUserItemProps {
 	next?: boolean;
 	bestUserItem: IUserInfo;
-	index: number;
+	index?: number;
 }
 
-const HistoryItem = ({ next = false, bestUserItem, index }: IHistoryItemProps) => {
+const BestUserItem = ({ next = false, bestUserItem, index }: IBestUserItemProps) => {
 	const { user } = useUserStore((state) => state);
 	const { t } = useTranslation();
 	return (
-		<HistoryItemWrapper className={clsx({ next }, "bestuser-" + index)}>
+		<BestUserItemWrapper className={clsx({ next }, "bestuser-" + index)}>
 			<Box className='user-info'>
 				<Typography component='span' className='item-index' color='text.primary'>
 					{index}.
@@ -28,10 +28,10 @@ const HistoryItem = ({ next = false, bestUserItem, index }: IHistoryItemProps) =
 				<InfoItem type='speed' direction='horizontal' value={bestUserItem.bestSpeed} />
 				<InfoItem type='accuracy' direction='horizontal' value={bestUserItem.bestAccuracy} />
 			</Box>
-		</HistoryItemWrapper>
+		</BestUserItemWrapper>
 	);
 };
-const HistoryItemWrapper = styled(Box)(() => ({
+const BestUserItemWrapper = styled(Box)(() => ({
 	display: "flex",
 	alignItems: "center",
 	justifyContent: "space-between",
@@ -86,4 +86,4 @@ const HistoryItemWrapper = styled(Box)(() => ({
 		borderRadius: "32px",
 	},
 }));
-export default HistoryItem;
+export default BestUserItem;

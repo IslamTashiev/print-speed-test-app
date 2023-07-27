@@ -10,13 +10,17 @@ import { useTestStore } from "@/store/testStore";
 
 type ICurrentLanguage = "ru" | "en" | "ukr";
 
+interface ILanguageSelectorProps {
+	changeGlobal?: boolean;
+}
+
 const languagesInfo = {
 	ru: { icon: <RuIcon />, language: "Русский", key: "ru" },
 	en: { icon: <EnIcon />, language: "English", key: "en" },
 	ukr: { icon: <UkrIcon />, language: "Украинська", key: "ukr" },
 };
 
-const LanguageSelector = (): JSX.Element => {
+const LanguageSelector = ({ changeGlobal }: ILanguageSelectorProps): JSX.Element => {
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	const [currentLanguage, setCurrentLanguage] = useState<ICurrentLanguage>(
 		i18n.language as ICurrentLanguage
@@ -25,22 +29,24 @@ const LanguageSelector = (): JSX.Element => {
 	const { getText, resetAllStates } = useTestStore((state) => state);
 
 	const changeLanguage = (language: ICurrentLanguage) => {
-		i18n.changeLanguage(language);
+		if (!changeGlobal) {
+			i18n.changeLanguage(language);
+			getText(language);
+			resetAllStates();
+			localStorage.setItem("language", language);
+		}
 		setCurrentLanguage(language);
-		getText(language);
-		resetAllStates();
 		setIsOpen(false);
-		localStorage.setItem("language", language);
 	};
 
 	return (
-		<LanguageSelectorWrapper className='language-selector'>
+		<LanguageSelectorWrapper className={clsx("language-selector", { "full-width": !changeGlobal })}>
 			<Button
 				variant='text'
 				onClick={() => setIsOpen(!isOpen)}
 				className={clsx("language-selector-current", { open: isOpen })}
 			>
-				{languagesInfo?.[currentLanguage]?.icon}
+				{!changeGlobal && languagesInfo?.[currentLanguage]?.icon}
 				<Typography className='language' variant='body2' color='text.primary' fontSize={14}>
 					{languagesInfo?.[currentLanguage]?.language}
 				</Typography>
@@ -52,7 +58,7 @@ const LanguageSelector = (): JSX.Element => {
 							<ListItem key={item.language}>
 								<ListItemButton onClick={() => changeLanguage(item.key as ICurrentLanguage)}>
 									<Box className='language-selector-list-item'>
-										{item.icon}
+										{!changeGlobal && item.icon}
 										<Typography
 											className='language'
 											variant='body2'
@@ -74,6 +80,10 @@ const LanguageSelector = (): JSX.Element => {
 
 const LanguageSelectorWrapper = styled(Box)(() => ({
 	position: "relative",
+	maxWidth: "80%",
+	"&.full-width": {
+		maxWidth: "100%",
+	},
 
 	".language-selector-current": {
 		display: "flex",
@@ -85,6 +95,7 @@ const LanguageSelectorWrapper = styled(Box)(() => ({
 		borderRadius: "10px",
 		position: "relative",
 		zIndex: 2,
+		width: "100%",
 	},
 
 	".language-selector-list": {
@@ -94,7 +105,7 @@ const LanguageSelectorWrapper = styled(Box)(() => ({
 		borderRadius: "10px",
 		paddingTop: "40px",
 		top: "0",
-		zIndex: 0,
+		zIndex: 1,
 		overflow: "hidden",
 		maxHeight: "0",
 		transition: "all .5s ease",
