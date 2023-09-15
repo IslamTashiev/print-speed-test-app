@@ -22,7 +22,7 @@ const TypingSpeedTest: React.FC<TypingSpeedTestProps> = ({ initialText }) => {
 	const [simbols, setSimbols] = useState<string[]>([]);
 	const [checkedSimbols, setCheckedSimbols] = useState<string[]>([]);
 
-	const myInterval1: number | any = useRef(null);
+	const myInterval: number | any = useRef(null);
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		event.preventDefault();
