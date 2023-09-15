@@ -54,7 +54,7 @@ const TypingSpeedTest: React.FC<TypingSpeedTestProps> = ({ initialText }) => {
 			setSimbols(initialText.split(""));
 			setCurrentCheckedSimbol(initialText[0]);
 		}
-	}, []);
+	}, [initialText]);
 
 	useEffect(() => {
 		if (startTimer) {
