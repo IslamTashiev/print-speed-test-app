@@ -12,4 +12,4 @@ const months = [
 	"month_11",
 	"month_12",
 ];
-export const getMonthByIndex = (month: number) => months[month + 1];
+export const getMonthByIndex = (month: number) => months[month];
