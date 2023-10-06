@@ -22,12 +22,14 @@ import { getMonthByIndex } from "@/utils/getMonthByIndex";
 
 interface IUserState {
 	user: FirebaseUser | null;
+	userLoaded: boolean;
 	userStats: IUpdatedUser | null;
 	historyItems: IHistoryItem[];
 	bestUsers: IUserInfo[];
 	login: (value: IUserData) => void;
 	register: (value: IUserData) => void;
 	setUser: (value: FirebaseUser | null) => void;
+	setUserLoaded: (userLoaded: boolean) => void;
 	logout: () => void;
 	createUserInDb: (userData: IUserInfo) => void;
 	updateUserStat: (userData: IUpdatedUser) => void;
@@ -65,21 +67,26 @@ export interface IUpdatedUser {
 
 export const useUserStore = create<IUserState>((set, get) => ({
 	user: null,
+	userLoaded: false,
 	userStats: null,
 	historyItems: [],
 	bestUsers: [],
 	login: async (userData: IUserData) => {
+		set({ userLoaded: false });
 		const userCredential = await signInWithEmailAndPassword(
 			auth,
 			userData.email,
 			userData.password
 		);
-		set({ user: userCredential.user });
+		set({ user: userCredential.user, userLoaded: true });
 	},
 	setUser: (user: FirebaseUser | null) => set({ user }),
+	setUserLoaded: (userLoaded: boolean) => set({ userLoaded }),
 	register: async (userData: IUserData) => {
 		const { email, name, password, bestAccuracy, bestPlace, bestSpeed } = userData;
 		const state = get();
+
+		set({ userLoaded: false });
 
 		const userCredential = await createUserWithEmailAndPassword(auth, email, password);
 		const user = userCredential.user;
@@ -97,7 +104,7 @@ export const useUserStore = create<IUserState>((set, get) => ({
 			userName: user.displayName || "Just User",
 		});
 
-		set({ user: user });
+		set({ user: user, userLoaded: true });
 	},
 	logout: async () => {
 		await signOut(auth);
